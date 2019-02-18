@@ -14,6 +14,8 @@ this is a 21 week plan to study GAN
 NIPS 2016 tutorial: Generative Adversarial Networks https://arxiv.org/pdf/1701.00160.pdf  
 Generative Adversarial Networks: An Overview https://arxiv.org/pdf/1710.07035.pdf  
 
+---
+
 </details>
 
 * Feb.8 - 14  
