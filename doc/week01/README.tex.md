@@ -26,7 +26,7 @@ scheduled date: Feb. 1 - Feb. 7
 3. there is gap between optimizing $p_g$ and $\theta_g$, the gap is covered by the effectiveness of neural networks.
 4. data points are discrete and could have very different properties with small shifts (eg adversarial). could it be a problem for GAN to use $p_{data}(x)$, a continuous distribution in theory.
 
-### NIPS 2016 tutorial: Generative Adversarial Networks 
+#### NIPS 2016 tutorial: Generative Adversarial Networks 
 [paper link](https://arxiv.org/pdf/1701.00160.pdf)
 > This is a tutorial of GAN by Ian Goodfellow
 > Content includes: why GAN, details on GAN vs related model, math of GAN, tips/tricks, research frontiers etc.
