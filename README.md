@@ -5,7 +5,7 @@ this is a 21 week plan to study GAN
 >reproduced models (in python) are in /src directory
 
 ### weekly schedule:
-<details><summary>finished progress</summary>
+<details open><summary>finished progress</summary>
 
 * week 1  
   scheduled: Feb. 1- 7        
@@ -15,7 +15,7 @@ this is a 21 week plan to study GAN
 NIPS 2016 tutorial: Generative Adversarial Networks https://arxiv.org/pdf/1701.00160.pdf  
 Generative Adversarial Networks: An Overview https://arxiv.org/pdf/1710.07035.pdf  
 
-finish date: Feb. 19 [doc](doc/week01)
+finish date: Feb. 19 [paper review](doc/week01)
 
 ---
 
