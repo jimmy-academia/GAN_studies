@@ -7,8 +7,8 @@ this is a 21 week plan to study GAN
 ### weekly schedule:
 <details><summary>finished progress</summary>
 
-* week 1  
-scheduled: Feb. 1- 7        
+* week 1
+  scheduled: Feb. 1- 7        
 
     1. read first few GAN papers
         - Generative Adversarial Nets https://arxiv.org/abs/1406.2661  
@@ -126,7 +126,7 @@ Multi-Agent Diverse Generative Adversarial Networks https://arxiv.org/abs/1704.0
 following: https://github.com/qhoangdl/MGAN (tensorflow)  
 (MAD GAN in tensorflow https://github.com/rishabh135/MAD-GAN-MLCAMP/blob/master/madgan_compete_modif.py   )  
 (tensorflow gan example https://github.com/tensorflow/models/tree/master/research/gan) 
-* week 1  0
+* week 10  
 scheduled: Apr. 5 - 11  
     1. read:  
 Generative Multi-Adversarial Networks https://arxiv.org/abs/1611.01673  
@@ -136,15 +136,15 @@ https://arxiv.org/abs/1811.03850
     2. rewrite to pytorch and reproduce GMAN  
 following: https://github.com/iDurugkar/GMAN (tensorflow)  
 
-* week 1  1
+* week 11  
 scheduled: Apr. 12 - 18 (Midterm)  
-* week 1  2
+* week 12  
 scheduled: Apr. 19 - 25  
     1. 
 (best results with imagenet ((possibly with PGGAN)) ) 
 create GAN with multiple generator and multiple discriminator  
 
-* week 1  3
+* week 13  
 scheduled: Apr. 26 - May 2  
 
     1. create GAN with multiple generator and multiple discriminator  
@@ -154,7 +154,7 @@ aim: smaller GAN (than PGGAN?) that can create good image (~ imagenet)
 \<follow multiple GAN examples and try different approaches>  
 
   
-* week 1  4
+* week 14  
 scheduled: May 3 - 9   
 
     1. read Memorization Precedes Generation: Learning Unsupervised GANs with Memory Networks  
@@ -171,24 +171,24 @@ Goal:
 succeed in creating high quality image (imagenet pictures) with single GPU, less training hours  
 try to succeed with multiple classes.  
 
-* week 1  5
+* week 15  
 scheduled: May 10 - 16  
-* week 1  6
+* week 16  
 scheduled: May 17 - 23  
-* week 1  7
+* week 17  
 scheduled: May 24 - 30  
-* week 1  8
+* week 18  
 scheduled: May 31 - Jun. 6  
 
 」  
 
 \<test new GAN ideas and search for related papers: memory; try new ideas!>  
-* week 1  9
+* week 19  
 scheduled: Jun. 7 - 13  
 finish GAN results, write report  
-* week 2  0
+* week 20  
 scheduled: Jun. 14 - 20 (final) 
-* week 2  1
+* week 21  
 scheduled: Jun. 21 - 28  
 
 finish GAN results, write report  
