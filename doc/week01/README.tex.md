@@ -34,7 +34,8 @@ scheduled date: Feb. 1 - Feb. 7
 #### selected key points:
 0. testing :when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the op
     *  testing: when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the op
-
+    testing: when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the op
+    
 1. GAN (or other generative model) can handle multi-modal outputs, which if averaged won't be correct (ex predict next video frame of turning head, wrong if you do [turn left + turn right]/2)
 2. DCGAN are fundamental architechture for recent GANs, key insights includes: batch normalization in both D and G (last layer of D and first of G is not batch normalized); use transposed convolution, no pooling or unpooling katers; use ADAM rather than SGD with momentum
 3. Tips and Tricks:
