@@ -32,6 +32,14 @@ scheduled date: Feb. 1 - Feb. 7
 > Content includes: why GAN, details on GAN vs related model, math of GAN, tips/tricks, research frontiers etc.
 
 #### selected key points:
+0. testing testing testing testing testing   $-logD(G(z))$   §  $-logD(G(z))$  parameterization: use $-logD(G(z))$ instead of $log(1-D(G(z)))$    
+$-logD(G(z))$   
+testing  $-logD(G(z))$ 
+§ parameterization: use $-logD(G(z))$ instead of $log(1-D(G(z)))$  
+    $-logD(G(z))$   
+    testing  $-logD(G(z))$ 
+    § parameterization: use $-logD(G(z))$ instead of $log(1-D(G(z)))$  
+
 1. GAN (or other generative model) can handle multi-modal outputs, which if averaged won't be correct (ex predict next video frame of turning head, wrong if you do [turn left + turn right]/2)
 2. DCGAN are fundamental architechture for recent GANs, key insights includes: batch normalization in both D and G (last layer of D and first of G is not batch normalized); use transposed convolution, no pooling or unpooling katers; use ADAM rather than SGD with momentum  
 3. Tips and Tricks:  
