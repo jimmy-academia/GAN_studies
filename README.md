@@ -7,7 +7,8 @@ this is a 21 week plan to study GAN
 ### weekly schedule:
 <details><summary>finished progress</summary>
 
-* Feb.1- 7        
+* week1 
+scheduled: Feb.1- 7        
 
     1. read first few GAN papers
         - Generative Adversarial Nets https://arxiv.org/abs/1406.2661  
