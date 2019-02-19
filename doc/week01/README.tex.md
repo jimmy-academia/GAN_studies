@@ -26,17 +26,14 @@ scheduled date: Feb. 1 - Feb. 7
 3. there is gap between optimizing $p_g$ and $\theta_g$, the gap is covered by the effectiveness of neural networks.
 4. data points are discrete and could have very different properties with small shifts (eg adversarial). could it be a problem for GAN to use $p_{data}(x)$, a continuous distribution in theory.
 
-testing: when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the op
-
 ## NIPS 2016 tutorial: Generative Adversarial Networks 
 [paper link](https://arxiv.org/pdf/1701.00160.pdf)
 > This is a tutorial of GAN by Ian Goodfellow
 > Content includes: why GAN, details on GAN vs related model, math of GAN, tips/tricks, research frontiers etc.
 
-testing: when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the op
-
 #### selected key points:
-testing :when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the op
+0. testing :when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the op
+    *  testing: when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the op
 
 1. GAN (or other generative model) can handle multi-modal outputs, which if averaged won't be correct (ex predict next video frame of turning head, wrong if you do [turn left + turn right]/2)
 2. DCGAN are fundamental architechture for recent GANs, key insights includes: batch normalization in both D and G (last layer of D and first of G is not batch normalized); use transposed convolution, no pooling or unpooling katers; use ADAM rather than SGD with momentum
