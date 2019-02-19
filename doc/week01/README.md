@@ -43,12 +43,14 @@ scheduled date: Feb. 1 - Feb. 7
 2. one-sided label smoothing: only on true side (1->0.9); (0->0.1) not good  
 3. batch normalization oscilates results when batch too small. reference batch normalization sampled at the start, or virtual batch normalization (= ref + example) solves problem  
 4. Author believes that GAN wors by estimating ratio fo data density and model density, and would only work when D is optimal. When D too accurate, gradient for G vanishes. However still let D>G (by k vs 1 step update for each) and use parameterization of the game. D is often deeper/more layer in practice.   
-5. parameterization: use <img src="/doc/week01/tex/141e64b7091b33a92d538be07e0f1e3f.svg?invert_in_darkmode&sanitize=true" align=middle width=95.34154739999998pt height=24.65753399999998pt/> instead of <img src="/doc/week01/tex/93e7703ad507269d13c05e707bca0105.svg?invert_in_darkmode&sanitize=true" align=middle width=123.65194709999999pt height=24.65753399999998pt/>  
+5. parameterization: use <img src="/doc/week01/tex/141e64b7091b33a92d538be07e0f1e3f.svg?invert_in_darkmode&sanitize=true" align=middle width=95.34154739999998pt height=24.65753399999998pt/> instead of <img src="/doc/week01/tex/93e7703ad507269d13c05e707bca0105.svg?invert_in_darkmode&sanitize=true" align=middle width=123.65194709999999pt height=24.65753399999998pt/>    
+
 § Research frontiers:  
 1. None covergence is an issue the gap between optimizing 𝑝𝑔 (function space) and 𝜃𝑔 (parameter) blocks the theorem for GAN to gurantee convergence. There is currently no theoretical proof or argument as to whether GAN game should converge or not  
 2. One of main convergance problem is: **Mode Collapse**, aka the Helvetica scenerio. This happens when <p align="center"><img src="/doc/week01/tex/e88d5bbf53a01c696fba7884c38aad4e.svg?invert_in_darkmode&sanitize=true" align=middle width=166.1939598pt height=22.931502pt/></p> turns to <p align="center"><img src="/doc/week01/tex/89f6a308e37ba2a1e208c4cc66ae4e7f.svg?invert_in_darkmode&sanitize=true" align=middle width=166.1939598pt height=22.931502pt/></p> in the later G simply always produce one of the optimal mode.  
 3. Minibatch features (check is samples in minibatch is similar to one another) works well for preventing mode collapes. It is recommended to copy the code for this. Other solution is unrolled GAN (can't scale for ImageNet), stackGAN  
 4. minibatch feature work so well for mode collapse that author suggests we work other problems including difficulties of counting, perspective, global structure (various unphsical/unbiological images generated)   
+
 § other frontiers  
 1. GAN research could enhance AI research with games. Connection to RL is promising  
 2. semi-supervised learning (additional fake image class)  
