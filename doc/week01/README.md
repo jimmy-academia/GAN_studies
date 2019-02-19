@@ -26,7 +26,7 @@ scheduled date: Feb. 1 - Feb. 7
 3. there is gap between optimizing <img src="/doc/week01/tex/c792a6f8388d7a9d1305e9cbd7aabed2.svg?invert_in_darkmode&sanitize=true" align=middle width=15.09653639999999pt height=14.15524440000002pt/> and <img src="/doc/week01/tex/442b66a193e68f9acbebdc7d3d04a580.svg?invert_in_darkmode&sanitize=true" align=middle width=14.54286239999999pt height=22.831056599999986pt/>, the gap is covered by the effectiveness of neural networks.
 4. data points are discrete and could have very different properties with small shifts (eg adversarial). could it be a problem for GAN to use <img src="/doc/week01/tex/a8b88154842060731b33a4a01984e7fd.svg?invert_in_darkmode&sanitize=true" align=middle width=57.34250939999999pt height=24.65753399999998pt/>, a continuous distribution in theory.
 
-### NIPS 2016 tutorial: Generative Adversarial Networks 
+#### NIPS 2016 tutorial: Generative Adversarial Networks 
 [paper link](https://arxiv.org/pdf/1701.00160.pdf)
 > This is a tutorial of GAN by Ian Goodfellow
 > Content includes: why GAN, details on GAN vs related model, math of GAN, tips/tricks, research frontiers etc.
