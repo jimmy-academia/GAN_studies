@@ -8,7 +8,6 @@ scheduled date: Feb. 1 - Feb. 7
 [Generative Adversarial Networks: An Overview ](#Generative-Adversarial-Networks-An-Overview)  
 
 
-$\qquad$ 
 ## Generative Adversarial Nets     
 [paper link](https://arxiv.org/abs/1406.2661)
 
