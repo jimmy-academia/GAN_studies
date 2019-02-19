@@ -26,17 +26,14 @@ scheduled date: Feb. 1 - Feb. 7
 3. there is gap between optimizing <img src="/doc/week01/tex/c792a6f8388d7a9d1305e9cbd7aabed2.svg?invert_in_darkmode&sanitize=true" align=middle width=15.09653639999999pt height=14.15524440000002pt/> and <img src="/doc/week01/tex/442b66a193e68f9acbebdc7d3d04a580.svg?invert_in_darkmode&sanitize=true" align=middle width=14.54286239999999pt height=22.831056599999986pt/>, the gap is covered by the effectiveness of neural networks.
 4. data points are discrete and could have very different properties with small shifts (eg adversarial). could it be a problem for GAN to use <img src="/doc/week01/tex/a8b88154842060731b33a4a01984e7fd.svg?invert_in_darkmode&sanitize=true" align=middle width=57.34250939999999pt height=24.65753399999998pt/>, a continuous distribution in theory.
 
-testing: when <p align="center"><img src="/doc/week01/tex/e88d5bbf53a01c696fba7884c38aad4e.svg?invert_in_darkmode&sanitize=true" align=middle width=166.1939598pt height=22.931502pt/></p> turns to <p align="center"><img src="/doc/week01/tex/89f6a308e37ba2a1e208c4cc66ae4e7f.svg?invert_in_darkmode&sanitize=true" align=middle width=166.1939598pt height=22.931502pt/></p> in the later G simply always produce one of the op
-
 ## NIPS 2016 tutorial: Generative Adversarial Networks 
 [paper link](https://arxiv.org/pdf/1701.00160.pdf)
 > This is a tutorial of GAN by Ian Goodfellow
 > Content includes: why GAN, details on GAN vs related model, math of GAN, tips/tricks, research frontiers etc.
 
-testing: when <p align="center"><img src="/doc/week01/tex/e88d5bbf53a01c696fba7884c38aad4e.svg?invert_in_darkmode&sanitize=true" align=middle width=166.1939598pt height=22.931502pt/></p> turns to <p align="center"><img src="/doc/week01/tex/89f6a308e37ba2a1e208c4cc66ae4e7f.svg?invert_in_darkmode&sanitize=true" align=middle width=166.1939598pt height=22.931502pt/></p> in the later G simply always produce one of the op
-
 #### selected key points:
-testing :when <p align="center"><img src="/doc/week01/tex/e88d5bbf53a01c696fba7884c38aad4e.svg?invert_in_darkmode&sanitize=true" align=middle width=166.1939598pt height=22.931502pt/></p> turns to <p align="center"><img src="/doc/week01/tex/89f6a308e37ba2a1e208c4cc66ae4e7f.svg?invert_in_darkmode&sanitize=true" align=middle width=166.1939598pt height=22.931502pt/></p> in the later G simply always produce one of the op
+0. testing :when <p align="center"><img src="/doc/week01/tex/e88d5bbf53a01c696fba7884c38aad4e.svg?invert_in_darkmode&sanitize=true" align=middle width=166.1939598pt height=22.931502pt/></p> turns to <p align="center"><img src="/doc/week01/tex/89f6a308e37ba2a1e208c4cc66ae4e7f.svg?invert_in_darkmode&sanitize=true" align=middle width=166.1939598pt height=22.931502pt/></p> in the later G simply always produce one of the op
+    *  testing: when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the op
 
 1. GAN (or other generative model) can handle multi-modal outputs, which if averaged won't be correct (ex predict next video frame of turning head, wrong if you do [turn left + turn right]/2)
 2. DCGAN are fundamental architechture for recent GANs, key insights includes: batch normalization in both D and G (last layer of D and first of G is not batch normalized); use transposed convolution, no pooling or unpooling katers; use ADAM rather than SGD with momentum
