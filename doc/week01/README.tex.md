@@ -42,7 +42,7 @@ scheduled date: Feb. 1 - Feb. 7
     * parameterization: use $-logD(G(z))$ instead of $log(1-D(G(z)))$
 4. Research frontiers:
     * None covergence is an issue the gap between optimizing 𝑝𝑔 (function space) and 𝜃𝑔 (parameter) blocks the theorem for GAN to gurantee convergence. There is currently no theoretical proof or argument as to whether GAN game should converge or not
-    * One of main convergance problem is: **Mode Collapse**, aka the Helvetica scenerio. This happens when (why this no work?)   $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the optimal mode.
+    * One of main convergance problem is: **Mode Collapse**, aka the Helvetica scenerio. This happens when (why this no work? hello hello)   $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the optimal mode.
     * Minibatch features (check is samples in minibatch is similar to one another) works well for preventing mode collapes. It is recommended to copy the code for this. Other solution is unrolled GAN (can't scale for ImageNet), stackGAN
     * minibatch feature work so well for mode collapse that author suggests we work other problems including difficulties of counting, perspective, global structure (various unphsical/unbiological images generated) 
 5. other frontiers
