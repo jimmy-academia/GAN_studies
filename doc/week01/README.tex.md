@@ -32,28 +32,24 @@ scheduled date: Feb. 1 - Feb. 7
 > Content includes: why GAN, details on GAN vs related model, math of GAN, tips/tricks, research frontiers etc.
 
 #### selected key points:
-0. testing :when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the op
-    *  testing: when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the op
-    testing: when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the op
-    
 1. GAN (or other generative model) can handle multi-modal outputs, which if averaged won't be correct (ex predict next video frame of turning head, wrong if you do [turn left + turn right]/2)
-2. DCGAN are fundamental architechture for recent GANs, key insights includes: batch normalization in both D and G (last layer of D and first of G is not batch normalized); use transposed convolution, no pooling or unpooling katers; use ADAM rather than SGD with momentum
-3. Tips and Tricks:
-    * train with labels: can help model gain more info
-    * one-sided label smoothing: only on true side (1->0.9); (0->0.1) not good
-    * batch normalization oscilates results when batch too small. reference batch normalization sampled at the start, or virtual batch normalization (= ref + example) solves problem
-    * Author believes that GAN wors by estimating ratio fo data density and model density, and would only work when D is optimal. When D too accurate, gradient for G vanishes. However still let D>G (by k vs 1 step update for each) and use parameterization of the game. D is often deeper/more layer in practice. 
-    * parameterization: use $-logD(G(z))$ instead of $log(1-D(G(z)))$
-4. Research frontiers:
-    * None covergence is an issue the gap between optimizing 𝑝𝑔 (function space) and 𝜃𝑔 (parameter) blocks the theorem for GAN to gurantee convergence. There is currently no theoretical proof or argument as to whether GAN game should converge or not
-    * One of main convergance problem is: **Mode Collapse**, aka the Helvetica scenerio. This happens when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the optimal mode.
-    * Minibatch features (check is samples in minibatch is similar to one another) works well for preventing mode collapes. It is recommended to copy the code for this. Other solution is unrolled GAN (can't scale for ImageNet), stackGAN
-    * minibatch feature work so well for mode collapse that author suggests we work other problems including difficulties of counting, perspective, global structure (various unphsical/unbiological images generated) 
-5. other frontiers
-    * GAN research could enhance AI research with games. Connection to RL is promising
-    * semi-supervised learning (additional fake image class)
-    * using the code. Encoder for arbitrary img -> code hasn't succeed but infoGan is useful
-    *  plug and play not well understood yet and is skipped
+2. DCGAN are fundamental architechture for recent GANs, key insights includes: batch normalization in both D and G (last layer of D and first of G is not batch normalized); use transposed convolution, no pooling or unpooling katers; use ADAM rather than SGD with momentum  
+3. Tips and Tricks:  
+    § train with labels: can help model gain more info  
+    § one-sided label smoothing: only on true side (1->0.9); (0->0.1) not good  
+    § batch normalization oscilates results when batch too small. reference batch normalization sampled at the start, or virtual batch normalization (= ref + example) solves problem  
+    § Author believes that GAN wors by estimating ratio fo data density and model density, and would only work when D is optimal. When D too accurate, gradient for G vanishes. However still let D>G (by k vs 1 step update for each) and use parameterization of the game. D is often deeper/more layer in practice.   
+    § parameterization: use $-logD(G(z))$ instead of $log(1-D(G(z)))$  
+4. Research frontiers:  
+    § None covergence is an issue the gap between optimizing 𝑝𝑔 (function space) and 𝜃𝑔 (parameter) blocks the theorem for GAN to gurantee convergence. There is currently no theoretical proof or argument as to whether GAN game should converge or not  
+    § One of main convergance problem is: **Mode Collapse**, aka the Helvetica scenerio. This happens when $$G^* = \min\limits_G\max\limits_DV(G,D)$$ turns to $$G^* = \max\limits_D\min\limits_GV(G,D)$$ in the later G simply always produce one of the optimal mode.  
+    § Minibatch features (check is samples in minibatch is similar to one another) works well for preventing mode collapes. It is recommended to copy the code for this. Other solution is unrolled GAN (can't scale for ImageNet), stackGAN  
+    § minibatch feature work so well for mode collapse that author suggests we work other problems including difficulties of counting, perspective, global structure (various unphsical/unbiological images generated)   
+5. other frontiers  
+    § GAN research could enhance AI research with games. Connection to RL is promising  
+    § semi-supervised learning (additional fake image class)  
+    § using the code. Encoder for arbitrary img -> code hasn't succeed but infoGan is useful  
+    §  plug and play not well understood yet and is skipped  
 6. $V(x,y) = xy$ is a simple example of saddle point. If solve for minimax game we would get two set of sinusoids and essentialy a circular orbit that never reaches equilibrium (x=y=0) 
 7. "For GANs, there is no theoretical prediction as to whether simultaneous gradient descent should converge or not. Settling this theoretical question and developting algorithms guaranteed to converge, remain important open research problems"
 
