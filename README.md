@@ -43,13 +43,13 @@ https://github.com/pianomania/infoGAN-pytorch
 * week 4  
 scheduled: Feb. 22 - 28  
 
-1. read Wassertein GAN: https://arxiv.org/abs/1701.07875  
+    1. read Wassertein GAN: https://arxiv.org/abs/1701.07875  
 and Improved training of Wassertein GANs https://arxiv.org/abs/1704.00028  
 reproduce WGAN on lsun and cifar10  
 following: https://github.com/martinarjovsky/WassersteinGAN  
 other resources https://github.com/cedrickchee/wasserstein-gan  
 
-2. reproduce Improved WGAN on lsun and cifar10  
+    2. reproduce Improved WGAN on lsun and cifar10  
 following: https://github.com/jalola/improved-wgan-pytorch  
 other resources https://github.com/caogang/wgan-gp  
 
