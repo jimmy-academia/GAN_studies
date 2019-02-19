@@ -15,8 +15,11 @@ this is a 21 week plan to study GAN
 NIPS 2016 tutorial: Generative Adversarial Networks https://arxiv.org/pdf/1701.00160.pdf  
 Generative Adversarial Networks: An Overview https://arxiv.org/pdf/1710.07035.pdf  
 
-finish date: Feb. 19 [paper review](doc/week01)
-
+<p align="right">  
+result: <a href="doc/paper_review/week01.md">paper review</a>, <a href="https://github.com/5loaves-2fish-12basckets/ADF_studies/tree/master/doc/tensorflow/1_Learn_and_use_ML">tensorflow tutorial: learn and use ML</a><br>  
+finish date: Feb. 19
+</p>
+ 
 ---
 
 </details>
