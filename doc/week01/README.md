@@ -1,6 +1,6 @@
 
 # week1 paper reviews for GAN
-scheduled date: Feb. 1 - Feb. 7    [back to schedule](../../)
+scheduled date: Feb. 1 - Feb. 7    [back to schedule](../../../../)
 
 > paper list:  
 [ Generative Adversarial Nets ](#Generative-Adversarial-Nets)  
