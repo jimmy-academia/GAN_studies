@@ -21,7 +21,7 @@ from torch.utils import data
 from torchvision import datasets
 from torchvision import transforms
 
-def dataset(data_dir_root):
+def make_dataset(data_dir_root):
     return MNIST(data_dir_root, True)
 
 def MNIST(data_dir_root, train):
@@ -56,5 +56,5 @@ def CIFAR10(data_dir_root, train):
 #     )
 #     return data_loader
 # 
-def dataloader(dataset):
+def make_dataloader(dataset):
     return data.DataLoader(dataset, batch_size=128, shuffle=True)

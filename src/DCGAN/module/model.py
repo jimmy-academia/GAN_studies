@@ -19,12 +19,12 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class GAN(nn.Module):
-    def __init__(self, img_channel_num):
+    def __init__(self, img_channel_num=1):
         super(GAN, self).__init__()
-        self.generator = Generator(img_channel_num)
-        self.generator.apply(weights_init)
-        self.discriminator = Discriminator(img_channel_num)
-        self.generator.apply(weights_init)
+        self.G = Generator(img_channel_num)
+        self.G.apply(weights_init)
+        self.D = Discriminator(img_channel_num)
+        self.D.apply(weights_init)
 
     # def resume(self, checkpoint_path):
     #     self.generator.load_state_dict(torch.load(checkpoint_path+'gen.pk'))
