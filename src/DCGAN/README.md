@@ -14,6 +14,7 @@
 
 
 model structure:
+<img src="other/DCGAN_model.png"/>
 
 
 best result (gif)
