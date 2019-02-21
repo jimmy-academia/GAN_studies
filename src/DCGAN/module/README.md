@@ -7,3 +7,14 @@ structure:
 4. confic.py sets configurations in datafunc, model, and trainer
 
 * stage 1
+finish executable module for DCGAN on mnist
+* stage 2
+follow original paper to perform various experiments on model structure:
+	1. pooling vs no pooling
+	2. batchnorm vs no batchnorm
+	3. ReLU(G), LeakyRelu(D) vs sigmoid
+run on LSUN or imagenet-1k
+* stage 3
+follow medium article to perform on cifar10
+* stage 4
+follow original paper to classify on cifar10

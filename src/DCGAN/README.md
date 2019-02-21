@@ -14,7 +14,8 @@
 
 
 model structure:
-<img src="other/DCGAN_model.png"/>
+
+<img src="other/DCGAN_model.png" height=300/>
 
 
 best result (gif)
