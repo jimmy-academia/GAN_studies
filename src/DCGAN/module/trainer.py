@@ -41,10 +41,10 @@ class Trainer():
         if device =='cuda':
             self.model.cuda()
 
-        for i in range(200):
+        for i in range(20):
             self.train_one_epoch(dataloader, device)
-            if (i+1)%10 == 0:
-                self.save_img_sample(dataset)
+            # if (i+1)%10 == 0:
+            self.save_img_sample(dataset, i, device)
 
     def train_one_epoch(self, dataloader, device):
         real_label = 0
@@ -90,13 +90,13 @@ class Trainer():
                 %(err_Dis.item(), err_Gen.item(), Dis_out, Dis_gen_out)
             # progress_bar(batch_idx, len(dataloader), message)
             pbar.set_description(message)
-    def save_img_sample(dataset, image_dir = 'img/'):
+    def save_img_sample(self, dataset, epoch, device, image_dir = 'img/'):
         with torch.no_grad():
             r = randint(0, len(dataset))
             real_img = dataset[r][0][:]
             save_image(real_img.cpu(), image_dir+'real_'+str(epoch)+'.png')
             
             z = torch.randn(1, 100, 1, 1, device=device)
-            fake_img = net.generator(z)
+            fake_img = self.model.G(z)
             save_image(fake_img.cpu(), image_dir+'gen_'+str(epoch)+'.png')
 
