@@ -12,65 +12,83 @@
 #       D = discriminator()
 #       
 
+## currently written for MNIST dataset
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torch.optim as optim
 
-class generator(nn.Module):
-    # initializers
-    def __init__(self, d=128):
-        super(generator, self).__init__()
-        self.deconv1 = nn.ConvTranspose2d(100, d*8, 4, 1, 0)
-        self.deconv1_bn = nn.BatchNorm2d(d*8)
-        self.deconv2 = nn.ConvTranspose2d(d*8, d*4, 4, 2, 1)
-        self.deconv2_bn = nn.BatchNorm2d(d*4)
-        self.deconv3 = nn.ConvTranspose2d(d*4, d*2, 4, 2, 1)
-        self.deconv3_bn = nn.BatchNorm2d(d*2)
-        self.deconv4 = nn.ConvTranspose2d(d*2, d, 4, 2, 1)
-        self.deconv4_bn = nn.BatchNorm2d(d)
-        self.deconv5 = nn.ConvTranspose2d(d, 1, 4, 2, 1)
+class GAN(nn.Module):
+    def __init__(self, img_channel_num):
+        super(GAN, self).__init__()
+        self.generator = Generator(img_channel_num)
+        self.generator.apply(weights_init)
+        self.discriminator = Discriminator(img_channel_num)
+        self.generator.apply(weights_init)
 
-    # weight_init
-    def weight_init(self, mean, std):
-        for m in self._modules:
-            normal_init(self._modules[m], mean, std)
+    # def resume(self, checkpoint_path):
+    #     self.generator.load_state_dict(torch.load(checkpoint_path+'gen.pk'))
+    #     self.discriminator.load_state_dict(torch.load(checkpoint_path+'dis.pk'))
 
-    # forward method
+def weights_init(m):
+    classname = m.__class__.__name__
+    if classname.find('Conv') != -1:
+        m.weight.data.normal_(0.0, 0.02)
+    elif classname.find('BatchNorm') != -1:
+        m.weight.data.normal_(1.0, 0.02)
+        m.bias.data.fill_(0)
+
+class Generator(nn.Module):
+    def __init__(self, img_channel_num=1):
+        super(Generator, self).__init__()
+        self.main = nn.Sequential(
+            # (100)x1x1
+            nn.ConvTranspose2d(100,64, 7, 1, 0, bias=False), ## layer size originally double
+            nn.BatchNorm2d(64),
+            nn.ReLU(True),
+            # state size. (64) x 7 x 7
+            nn.ConvTranspose2d(64, 32, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(32),
+            nn.ReLU(True),
+            # state size. (32) x 14 x 14
+            nn.ConvTranspose2d(32, 1, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(1),
+            nn.Tanh()
+            # state size. (1) x 28 x 28 
+        )
+
     def forward(self, input):
-        # x = F.relu(self.deconv1(input))
-        x = F.relu(self.deconv1_bn(self.deconv1(input)))
-        x = F.relu(self.deconv2_bn(self.deconv2(x)))
-        x = F.relu(self.deconv3_bn(self.deconv3(x)))
-        x = F.relu(self.deconv4_bn(self.deconv4(x)))
-        x = F.tanh(self.deconv5(x))
+        output = self.main(input)
+        return output
 
-        return x
+## pytorch nn.ConvTranspose2d(in_channel, out_channel, kernel_size, stride, padding)
+# output_width = (input_width -1) x stride - 2*padding + kernel_size - 1 + 1
 
-class discriminator(nn.Module):
-    # initializers
-    def __init__(self, d=128):
-        super(discriminator, self).__init__()
-        self.conv1 = nn.Conv2d(1, d, 4, 2, 1)
-        self.conv2 = nn.Conv2d(d, d*2, 4, 2, 1)
-        self.conv2_bn = nn.BatchNorm2d(d*2)
-        self.conv3 = nn.Conv2d(d*2, d*4, 4, 2, 1)
-        self.conv3_bn = nn.BatchNorm2d(d*4)
-        self.conv4 = nn.Conv2d(d*4, d*8, 4, 2, 1)
-        self.conv4_bn = nn.BatchNorm2d(d*8)
-        self.conv5 = nn.Conv2d(d*8, 1, 4, 1, 0)
+#https://pytorch.org/docs/master/nn.html#torch.nn.ConvTranspose2d
 
-    # weight_init
-    def weight_init(self, mean, std):
-        for m in self._modules:
-            normal_init(self._modules[m], mean, std)
+class Discriminator(nn.Module):
+    def __init__(self, img_channel_num=1):
+        super(Discriminator, self).__init__()
+        self.main = nn.Sequential(
+            # input is (3) x 28 x 28    <------ size is different for different dataset!
+            nn.Conv2d(img_channel_num, 32, 4, 2, 1, bias=False),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (32) x 14 x 14
+            nn.Conv2d(32, 64, 4, 2, 1, bias=False),
+            nn.BatchNorm2d(64),
+            nn.LeakyReLU(0.2, inplace=True),
+            # state size. (64) x 7 x 7
+            nn.Conv2d(64, 1, 7, 1, 0, bias=False),
+            nn.BatchNorm2d(1),
+            # state size. (1) x 1 x 1
+            nn.Sigmoid()
+        )
 
-    # forward method
     def forward(self, input):
-        x = F.leaky_relu(self.conv1(input), 0.2)
-        x = F.leaky_relu(self.conv2_bn(self.conv2(x)), 0.2)
-        x = F.leaky_relu(self.conv3_bn(self.conv3(x)), 0.2)
-        x = F.leaky_relu(self.conv4_bn(self.conv4(x)), 0.2)
-        x = F.sigmoid(self.conv5(x))
+        output = self.main(input)
+        return output.view(-1, 1).squeeze(1)
 
-        return x
+
+## pytorch nn.Conv2d(in_channel, out_channel, kernel_size, stride, padding)
+# output_width = (input_width - kernel_size + 2*padding)/stride + 1
+

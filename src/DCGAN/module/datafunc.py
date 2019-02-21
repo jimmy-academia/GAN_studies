@@ -17,13 +17,12 @@
 
 
 import numpy as np
-
-# random_seed = 0
-
+from torch.utils import data
 from torchvision import datasets
 from torchvision import transforms
 
-def dataset(data_dir_root, )
+def dataset(data_dir_root):
+    return MNIST(data_dir_root, True)
 
 def MNIST(data_dir_root, train):
     normalize = transforms.Normalize((0.1307,), (0.3081,))
@@ -50,12 +49,12 @@ def CIFAR10(data_dir_root, train):
     )
     return dataset
 
+# def dataloader(dataset):
+#     data_loader = torch.utils.data.DataLoader(
+#         dataset, batch_size=batch_size, sampler=valid_sampler,
+#         num_workers=num_workers, pin_memory=pin_memory,
+#     )
+#     return data_loader
+# 
 def dataloader(dataset):
-
-    data_loader = torch.utils.data.DataLoader(
-        dataset, batch_size=batch_size, sampler=valid_sampler,
-        num_workers=num_workers, pin_memory=pin_memory,
-    )
-    return data_loader
-
-## one line data_loader = torch.utils.data.DataLoader(dataset, batch_size=55, shuffle=True)
+    return data.DataLoader(dataset, batch_size=128, shuffle=True)
