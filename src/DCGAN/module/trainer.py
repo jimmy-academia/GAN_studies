@@ -41,10 +41,10 @@ class Trainer():
         if device =='cuda':
             self.model.cuda()
 
-        for i in range(20):
+        for i in range(200):
             self.train_one_epoch(dataloader, device)
-            # if (i+1)%10 == 0:
-            self.save_img_sample(dataset, i, device)
+            if (i+1)%10 == 0:
+                self.save_img_sample(dataset, i, device)
 
     def train_one_epoch(self, dataloader, device):
         real_label = 0
@@ -55,25 +55,25 @@ class Trainer():
             self.model.D.zero_grad()
 
             # Discriminator 1
+            for __ in range(1):
+                inputs = inputs.to(device)
+                batch_size = inputs.shape[0]
+                label = torch.full((batch_size, ), real_label, device=device)
+                out = self.model.D(inputs)
+                err_Dis_real = self.criterion(out, label)
+                err_Dis_real.backward(retain_graph=True)
+                Dis_out = out.mean().item()
 
-            inputs = inputs.to(device)
-            batch_size = inputs.shape[0]
-            label = torch.full((batch_size, ), real_label, device=device)
-            out = self.model.D(inputs)
-            err_Dis_real = self.criterion(out, label)
-            err_Dis_real.backward(retain_graph=True)
-            Dis_out = out.mean().item()
+                z = torch.randn(batch_size, 100, 1, 1, device=device)
+                fake_inputs = self.model.G(z)
+                label.fill_(fake_label)
+            
+                out = self.model.D(fake_inputs)
+                err_Dis_fake = self.criterion(out, label)
+                err_Dis_fake.backward(retain_graph=True)
 
-            z = torch.randn(batch_size, 100, 1, 1, device=device)
-            fake_inputs = self.model.G(z)
-            label.fill_(fake_label)
-        
-            out = self.model.D(fake_inputs)
-            err_Dis_fake = self.criterion(out, label)
-            err_Dis_fake.backward(retain_graph=True)
-
-            err_Dis = err_Dis_fake + err_Dis_real
-            self.D_optimizer.step()
+                err_Dis = err_Dis_fake + err_Dis_real
+                self.D_optimizer.step()
 
             # Generator  maximize log(D(G(z)))
 
