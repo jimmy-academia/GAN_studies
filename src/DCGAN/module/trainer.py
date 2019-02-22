@@ -43,6 +43,7 @@ class Trainer():
 
     def train(self):
         # prepare data
+        print('running train for', self.config.taskname)
         dataset = make_dataset(self.config.data_dir_root, self.args)
         dataloader = make_dataloader(dataset, batch_size=self.args.batch_size)
         # train 1:1
