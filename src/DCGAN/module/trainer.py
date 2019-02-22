@@ -41,12 +41,16 @@ class Trainer():
         if device =='cuda':
             self.model.cuda()
 
-        for i in range(200):
-            self.train_one_epoch(dataloader, device)
-            if (i+1)%10 == 0:
-                self.save_img_sample(dataset, i, device)
+        epochs = 4000
+        k=7
+        image_path = 'img/mnist_%d_1_4000'%k
+        print('train #', epochs, 'D: %d, G:1, save at %s'%(k, image_path))
+        for i in range(epochs):   #200 --> 30min 2000--> 5hr
+            self.train_one_epoch(dataloader, device, k)
+            if (i+1)%400 == 0:
+                self.save_img_sample(dataset, i, device, image_path)
 
-    def train_one_epoch(self, dataloader, device):
+    def train_one_epoch(self, dataloader, device, k):
         real_label = 0
         fake_label = 1
         
@@ -55,7 +59,7 @@ class Trainer():
             self.model.D.zero_grad()
 
             # Discriminator 1
-            for __ in range(1):
+            for __ in range(k):
                 inputs = inputs.to(device)
                 batch_size = inputs.shape[0]
                 label = torch.full((batch_size, ), real_label, device=device)
@@ -90,7 +94,7 @@ class Trainer():
                 %(err_Dis.item(), err_Gen.item(), Dis_out, Dis_gen_out)
             # progress_bar(batch_idx, len(dataloader), message)
             pbar.set_description(message)
-    def save_img_sample(self, dataset, epoch, device, image_dir = 'img/'):
+    def save_img_sample(self, dataset, epoch, device, image_dir):
         with torch.no_grad():
             r = randint(0, len(dataset))
             real_img = dataset[r][0][:]
