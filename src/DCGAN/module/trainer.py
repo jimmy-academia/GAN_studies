@@ -41,11 +41,10 @@ class Trainer():
             if not os.path.exists(path):
                 os.makedirs(path)
 
-
     def train(self):
         # prepare data
-        dataset = make_dataset(self.config.data_dir_root)
-        dataloader = make_dataloader(dataset)
+        dataset = make_dataset(self.config.data_dir_root, self.args)
+        dataloader = make_dataloader(dataset, batch_size=self.args.batch_size)
         # train 1:1
 
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -57,15 +56,16 @@ class Trainer():
         self.opt.imgsample_epoch = self.opt.epochs//10
         for i in range(self.opt.epochs):   #200 --> 30min 2000--> 5hr
             self.train_one_epoch(dataloader, device, i)
-            if (i+1)%self.opt.imgsample_epoch == 0:
-                self.save_img_sample(dataset, i, device, self.opt.img_dir)
+            # if (i+1)%self.opt.imgsample_epoch == 0:
+            self.save_img_sample(dataset, i, device, self.opt.img_dir)
 
     def train_one_epoch(self, dataloader, device, epoch):
         real_label = 0
         fake_label = 1
         
-        pbar = tqdm(dataloader)
-        for inputs, __ in pbar:
+        # pbar = tqdm(dataloader)
+        # for inputs, __ in pbar:
+        for inputs, __ in dataloader:
             self.model.D.zero_grad()
 
             # Discriminator 1
@@ -74,6 +74,7 @@ class Trainer():
                 batch_size = inputs.shape[0]
                 label = torch.full((batch_size, ), real_label, device=device)
                 out = self.model.D(inputs)
+                out = out.view(-1)
                 err_Dis_real = self.criterion(out, label)
                 err_Dis_real.backward(retain_graph=True)
                 Dis_out = out.mean().item()
@@ -83,6 +84,7 @@ class Trainer():
                 label.fill_(fake_label)
             
                 out = self.model.D(fake_inputs)
+                out = out.view(-1)
                 err_Dis_fake = self.criterion(out, label)
                 err_Dis_fake.backward(retain_graph=True)
 
@@ -94,19 +96,20 @@ class Trainer():
                 self.model.G.zero_grad()
                 label.fill_(real_label)
                 out = self.model.D(fake_inputs)
+                out = out.view(-1)
                 Dis_gen_out = out.mean().item()
 
                 err_Gen = self.criterion(out, label)
                 err_Gen.backward(retain_graph=True)
                 self.G_optimizer.step()
 
-            message = '%d] errD:%.4f,errG:%.4f,D(x):%.4f,D(G(z)):%.4f' \
-                %(epoch, err_Dis.item(), err_Gen.item(), Dis_out, Dis_gen_out)
-            # progress_bar(batch_idx, len(dataloader), message)
-            pbar.set_description(message)
+            # message = 'epoch [%d/%d] errD:%.4f,errG:%.4f,D(x):%.4f,D(G(z)):%.4f' \
+            #     %(epoch, self.opt.epochs, err_Dis.item(), err_Gen.item(), Dis_out, Dis_gen_out)
+            # # progress_bar(batch_idx, len(dataloader), message)
+            # pbar.set_description(message)
 
     def save_img_sample(self, dataset, epoch, device, image_dir):
-        print('saving img')
+        # print('saving img')
         with torch.no_grad():
             # r = randint(0, len(dataset))
             # real_img = dataset[r][0][:]

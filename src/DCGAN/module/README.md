@@ -26,3 +26,10 @@ check model' x M epochs => what result?
 check best model x M epochs (k:1) => what result?
 							(1:k)
 ```
+
+
+## Error log
+model parameters in this is too small and does not work for MNIST at all!
+https://gist.github.com/xmfbit/cbdef5d6bfcb4f35f9c851161191f4b4
+changed to 
+https://github.com/togheppi/DCGAN/blob/master/MNIST_DCGAN_pytorch.py

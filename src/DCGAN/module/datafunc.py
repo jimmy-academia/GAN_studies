@@ -21,17 +21,18 @@ from torch.utils import data
 from torchvision import datasets
 from torchvision import transforms
 
-def make_dataset(data_dir_root):
-    return MNIST(data_dir_root, True)
+def make_dataset(data_dir_root, args):
+    return MNIST(data_dir_root, args)
 
-def MNIST(data_dir_root, train):
-    normalize = transforms.Normalize((0.1307,), (0.3081,))
+def MNIST(data_dir_root, args):
     trans = transforms.Compose([
-        transforms.ToTensor(), normalize,
+        transforms.Resize(args.img_size),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=(0.5,0.5,0.5), std=(0.5,0.5,0.5))
     ])
 
     dataset = datasets.MNIST(
-        data_dir_root+'/mnist', train=train, download=True, transform=trans
+        data_dir_root+'/mnist', train=True, download=True, transform=trans
     )
     return dataset
 
@@ -56,5 +57,5 @@ def CIFAR10(data_dir_root, train):
 #     )
 #     return data_loader
 # 
-def make_dataloader(dataset):
-    return data.DataLoader(dataset, batch_size=128, shuffle=True)
+def make_dataloader(dataset, batch_size):
+    return data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
