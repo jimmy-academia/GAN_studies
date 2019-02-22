@@ -61,47 +61,57 @@ class Trainer():
             self.save_img_sample(dataset, i, device, self.opt.img_dir)
 
     def train_one_epoch(self, dataloader, device, epoch):
-        real_label = 0
-        fake_label = 1
+        real_label = 1
+        fake_label = 0
         
         # pbar = tqdm(dataloader)
         # for inputs, __ in pbar:
         for inputs, __ in dataloader:
-            self.model.D.zero_grad()
 
             # Discriminator 1
             for __ in range(self.opt.k):
                 inputs = inputs.to(device)
                 batch_size = inputs.shape[0]
-                label = torch.full((batch_size, ), real_label, device=device)
+                label_real = torch.full((batch_size, ), real_label, device=device)
                 out = self.model.D(inputs)
                 out = out.view(-1)
-                err_Dis_real = self.criterion(out, label)
-                err_Dis_real.backward(retain_graph=True)
+                err_Dis_real = self.criterion(out, label_real)
+                # err_Dis_real.backward(retain_graph=True)
                 Dis_out = out.mean().item()
 
                 z = torch.randn(batch_size, 100, 1, 1, device=device)
                 fake_inputs = self.model.G(z)
-                label.fill_(fake_label)
+                # label.fill_(fake_label)
+                label_fake = torch.full((batch_size, ), fake_label, device=device)
+
             
                 out = self.model.D(fake_inputs)
                 out = out.view(-1)
-                err_Dis_fake = self.criterion(out, label)
-                err_Dis_fake.backward(retain_graph=True)
+                err_Dis_fake = self.criterion(out, label_fake)
+                # err_Dis_fake.backward(retain_graph=True)
 
                 err_Dis = err_Dis_fake + err_Dis_real
+                self.model.D.zero_grad()
+                err_Dis.backward()
                 self.D_optimizer.step()
 
             # Generator  maximize log(D(G(z)))
             for __ in range(self.opt.g):
-                self.model.G.zero_grad()
-                label.fill_(real_label)
+                
+                z = torch.randn(batch_size, 100, 1, 1, device=device)
+                fake_inputs = self.model.G(z)
+
+                # label.fill_(real_label)
                 out = self.model.D(fake_inputs)
                 out = out.view(-1)
                 Dis_gen_out = out.mean().item()
 
-                err_Gen = self.criterion(out, label)
-                err_Gen.backward(retain_graph=True)
+                err_Gen = self.criterion(out, label_real)
+                # err_Gen.backward(retain_graph=True)
+                
+                self.model.D.zero_grad()
+                self.model.G.zero_grad()
+                err_Gen.backward()
                 self.G_optimizer.step()
 
             # message = 'epoch [%d/%d] errD:%.4f,errG:%.4f,D(x):%.4f,D(G(z)):%.4f' \

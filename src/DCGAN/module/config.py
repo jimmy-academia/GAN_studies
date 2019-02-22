@@ -63,7 +63,7 @@ class model_param():
 		self.use_relu = True
 		
 		#trainer
-		self.lr = 3e-4
+		self.lr = 0.0002
 		self.betas = (0.5, 0.999)
 		self.refresh(config)
 
@@ -81,7 +81,7 @@ class training_param():
 		#train setting
 		self.g = 1
 		self.k = 1
-		self.epochs = 20
+		self.epochs = 100
 		# self.imgsample_epoch = self.epochs//10
 
 		# directories
