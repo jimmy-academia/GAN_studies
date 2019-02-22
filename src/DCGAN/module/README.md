@@ -18,3 +18,11 @@ run on LSUN or imagenet-1k
 follow medium article to perform on cifar10
 * stage 4
 follow original paper to classify on cifar10
+
+```
+experiment considerations for config:
+mnist best model x M epochs => good result
+check model' x M epochs => what result?
+check best model x M epochs (k:1) => what result?
+							(1:k)
+```

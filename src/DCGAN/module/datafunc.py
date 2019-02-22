@@ -45,7 +45,7 @@ def CIFAR10(data_dir_root, train):
 
     # load dataset
     dataset = datasets.CIFAR10(
-        data_dir_root+'/cifar10/', train=train, download=True, transform=trans
+        data_dir_root+'/cifar10', train=train, download=True, transform=trans
     )
     return dataset
 

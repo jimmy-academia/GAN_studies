@@ -1,12 +1,12 @@
 import sys
-sys.path.append('../module')
+sys.path.append('..')
 
 from module.trainer import Trainer
 from module.config import configurations
 
-
 def main():
 	config, args, opt = configurations()
+	opt.epochs = 20
 	trainer = Trainer(config, args, opt)
 	trainer.train()
 
