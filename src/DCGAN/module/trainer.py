@@ -168,6 +168,7 @@ class Trainer():
             if not os.path.exists(filepath):
                 os.mkdir(filepath)
             plt.savefig(filepath+'/'+img_name+'.png')
+            plt.close()
 
     def save_loss_plot(self, img_name='loss'):
         four_records = np.array(self.records).T
@@ -180,6 +181,7 @@ class Trainer():
         ax.plot(four_records[0], label='D loss', color='#CC0000')
         ax.plot(four_records[1], label='G loss', color='#FF8000')
         ax.tick_params('y', colors = '#CC0000')
+        ax.legend()
 
         ax2 = ax.twinx()
         ax2.set_ylim(0, np.max(four_records[2:])*1.1)
@@ -187,14 +189,15 @@ class Trainer():
         ax2.plot(four_records[2], label='D(x)', color='#0080FF')
         ax2.plot(four_records[3], label='D(G(z))', color='#808080')
         ax2.tick_params('y', colors='k')
-        plt.legend()
+        ax2.legend()
 
-        fig.text(0.5, 0.04, img_name, ha='center')
+        # fig.text(0.5, 0.04, img_name, ha='center')
         
         filepath = self.opt.task_dir+'/loss_plots'
         if not os.path.exists(filepath):
             os.mkdir(filepath)
         plt.savefig(filepath+'/'+img_name+'.png')
+        plt.close()
 
 # fig.tight_layout()
 
