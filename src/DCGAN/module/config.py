@@ -34,7 +34,7 @@ def configurations(taskname=None):
 		if taskname is None:
 			print('WARANING: USING COMPUTER TIME FOR TASKNAME')
 			time.sleep(2.1)
-			config.taskname = computer_time()
+			config.taskname = 'T'+computer_time()
 		else:
 			config.taskname = taskname
 
@@ -56,19 +56,15 @@ parser.add_argument('--taskname', type=str)
 dir_args = parser.add_argument_group('directories')
 dir_args.add_argument('--data_dir_root', type=str, default='/home/jimmy/datastore',
 	help='root for data download spot, \'/mnist/\' etc to be added')
-dir_args.add_argument('--task_result_root', type=str, default='./dump')
+dir_args.add_argument('--task_result_root', type=str, default='./results')
 # task related directories in training_param
 
 class model_param():
 	def __init__(self, config):
 		self.img_channel_num = 1
 		self.z_dim = 100
-		## this costs 6000.....
 		self.layer_G = [(1024,4,1,0), (512,4,2,1), (256,4,2,1), (128,4,2,1), (1,4,2,1)]
 		self.layer_D = [(128,4,2,1), (256,4,2,1), (512,4,2,1), (1024,4,2,1), (1,4,1,0)]
-		# was
-		# self.layer_G = [(64,7,1,0), (32,4,2,1), (1,4,2,1)]
-		# self.layer_D = [(32,4,2,1), (64,4,2,1), (1,7,1,0)]
 		self.use_batchnorm = True
 		self.use_relu = True
 		
@@ -91,11 +87,9 @@ class training_param():
 		#train setting
 		self.g = 1
 		self.k = 1
-		self.epochs = 100
+		self.epochs = 20
 
 		# directories
 		self.task_dir = config.task_result_root+'/'+config.taskname
-		self.img_dir = self.task_dir+'/img'
-		self.ckp_dir = self.task_dir+'/ckp'
-		self.dir_list = [self.img_dir, self.ckp_dir]
+		self.dir_list = [self.task_dir]
 

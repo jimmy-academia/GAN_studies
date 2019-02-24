@@ -1,6 +1,11 @@
 import subprocess
 import os
 
+def check_directories(dir_list):
+    for path in dir_list:
+        if not os.path.exists(path):
+            os.makedirs(path)
+
 def check_gpu():
 	name = 'nvidia-smi'
 	query = '--query-gpu=memory.free,memory.total,memory.used'

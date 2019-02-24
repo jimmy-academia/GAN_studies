@@ -2,31 +2,41 @@
 
 [Goal:] to implement the paper [Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks](http://arxiv.org/abs/1511.06434)
 
-## detail:
-
-* /module contains complet DCGAN with different options
-* /experiments contains script to control /module and perform experiments. Results in /experiment/results
-* to train new model use train.py
-* to run experiments or use best produce best result run .py
-
 ## usage:
-
+run experiments with `python experiments/<python script>`
 
 
 model structure:
 
 <img src="other/DCGAN_model.png" height=300/>
 
+### Results
+* For learning rate = 0.0002 (Adam optimizer), batch size = 128, # of epochs = 20:
+<table align='center'>
+<tr align='center'>
+<td> GAN losses</td>
+<td> Generated images</td>
+</tr>
+<tr>
+<td><img src = 'other/loss_plots.gif'>
+<td><img src = 'other/generated_imgs.gif'>
+</tr>
+</table>
 
-best result (gif)
 
 ## Tabel of Contents
 * [Experiments and Results](report.md)  
 * [ErrorLog](errorlog.md)
 
 ## references: 
-https://github.com/pytorch/examples/blob/master/dcgan/README.md
-The implementation is very close to the Torch implementation [dcgan.torch](https://github.com/soumith/dcgan.torch)
+https://github.com/togheppi/DCGAN/blob/master/README.md
+
+
+
+
+
+other
+
 
 After every 100 training iterations, the files `real_samples.png` and `fake_samples.png` are written to disk
 with the samples from the generative model.
