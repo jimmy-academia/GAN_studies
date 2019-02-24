@@ -41,24 +41,6 @@ class Trainer():
             if not os.path.exists(path):
                 os.makedirs(path)
 
-    def fastcheck(self, code):
-        print('fastcheck')
-        dataset = make_dataset(self.config.data_dir_root, self.args)
-        dataloader = make_dataloader(dataset, batch_size=self.args.batch_size)
-        # train 1:1
-
-        device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        if device =='cuda':
-            self.model.cuda()
-
-        print('train #', self.opt.epochs, 'D: %d, G:%d, save at %s'%
-            (self.opt.k, self.opt.g, './dump/fastcheck'))
-        self.opt.imgsample_epoch = self.opt.epochs//10
-        self.train_one_epoch(dataloader, device, 1)
-            # if (i+1)%self.opt.imgsample_epoch == 0:
-        self.save_img_sample(dataset, device, './dump/fastcheck', code)
-
-
     def train(self):
         # prepare data
         print('running train for', self.config.taskname)
@@ -82,10 +64,9 @@ class Trainer():
         real_label = 1
         fake_label = 0
         
-        pbar = tqdm(enumerate(dataloader))
-        length = len(dataloader)
-        for index, (inputs, __) in pbar:
-        # for inputs, __ in dataloader:
+        # pbar = tqdm(dataloader)
+        # for inputs, __ in pbar:
+        for inputs, __ in dataloader:
 
             # Discriminator 1
             for __ in range(self.opt.k):
@@ -133,14 +114,12 @@ class Trainer():
                 err_Gen.backward()
                 self.G_optimizer.step()
 
-            message = 'step[%d/%d] errD:%.4f,errG:%.4f,D(x):%.4f,D(G(z)):%.4f' \
-                %(index, length, err_Dis.item(), err_Gen.item(), Dis_out, Dis_gen_out)
-            # progress_bar(batch_idx, len(dataloader), message)
-            pbar.set_description(message)
-            if index == 50:
-                break
+            # message = 'epoch [%d/%d] errD:%.4f,errG:%.4f,D(x):%.4f,D(G(z)):%.4f' \
+            #     %(epoch, self.opt.epochs, err_Dis.item(), err_Gen.item(), Dis_out, Dis_gen_out)
+            # # progress_bar(batch_idx, len(dataloader), message)
+            # pbar.set_description(message)
 
-    def save_img_sample(self, dataset, device, image_dir, code='gen_'):
+    def save_img_sample(self, dataset, epoch, device, image_dir):
         # print('saving img')
         with torch.no_grad():
             # r = randint(0, len(dataset))
@@ -149,6 +128,5 @@ class Trainer():
             
             z = torch.randn(1, 100, 1, 1, device=device)
             fake_img = self.model.G(z)
-            save_image(fake_img.cpu(), image_dir+'/'+code+'.png')
+            save_image(fake_img.cpu(), image_dir+'/gen_'+str(epoch)+'.png')
 
-# 
