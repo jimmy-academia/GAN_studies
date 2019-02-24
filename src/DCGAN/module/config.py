@@ -1,17 +1,35 @@
+# -*- coding: utf-8 -*-
+"""A parser and 2 class to settle all configurations
+
+This module includes 1 parser and 2 class to settle all configurations.
+Some values in class will depend on parser value (i.e. dir names following
+taskname)
+
+Notes:
+	config => task related settings, directories
+	args => model parameters
+	opt => training options
+
+Example:
+	configurations('Name of this task')
+Todo:
+    * create function to refresh all connected values upon change.
+
+__author__  = '{Jimmy Yeh}'
+__email__   = '{marrch30@gmail.com}'
+"""
+
 import argparse
 import time
 
-## only those needed to be controlled from terminal will be passed by parser.
-# other configurations will be controlled by simple class object
-
-# I will use shorthand
-# agrs for model parameters
-# opt for training parameters
-# config for other issues
-
-# this will set everything to default status
 def configurations(taskname=None):
 	config, unparsed = parser.parse_known_args()
+
+	def computer_time():
+		time_list = time.ctime().split()
+		hr_min = ''.join(time_list[3].split(':')[:2])
+		return '_'.join(time_list[1:3])+'_'+hr_min
+		
 	if config.taskname is None:
 		if taskname is None:
 			print('WARANING: USING COMPUTER TIME FOR TASKNAME')
@@ -24,15 +42,7 @@ def configurations(taskname=None):
 	
 	args = model_param(config)
 	opt = training_param(config)
-	
 	return config, args, opt
-
-def computer_time():
-	time_list = time.ctime().split()
-	hr_min = ''.join(time_list[3].split(':')[:2])
-	return '_'.join(time_list[1:3])+'_'+hr_min
-	
-
 
 
 # determine datatype (will effect model)
@@ -82,7 +92,6 @@ class training_param():
 		self.g = 1
 		self.k = 1
 		self.epochs = 100
-		# self.imgsample_epoch = self.epochs//10
 
 		# directories
 		self.task_dir = config.task_result_root+'/'+config.taskname
