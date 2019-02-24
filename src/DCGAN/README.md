@@ -20,7 +20,9 @@ model structure:
 
 best result (gif)
 
-
+## Tabel of Contents
+* [Experiments and Results](report.md)  
+* [ErrorLog](errorlog.md)
 
 ## references: 
 https://github.com/pytorch/examples/blob/master/dcgan/README.md
