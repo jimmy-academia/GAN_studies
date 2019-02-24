@@ -4,7 +4,7 @@ backto [README](README.md)
 
 > Code couldn't produce correct result, found on Github: [DCGAN for MNIST](https://github.com/togheppi/DCGAN/blob/master/MNIST_DCGAN_pytorch.py) 
 
-Comparison (correct vs mine):
+Comparison adjusted but not checked(correct vs mine):
 1. model size could be too small ()
 
     self.layer_G = [(1024,4,1,0), (512,4,2,1), (256,4,2,1), (128,4,2,1), (1,4,2,1)]
@@ -16,7 +16,12 @@ Comparison (correct vs mine):
 3. learning rate = 0.0002 vs 0.0003
 4.  errD_real + errD_fake = error, error.backwards vs errD_real.backwards, errD_fake.backwards
 5.  D zerograd when training G
-
+==> Found that error is due to **model**
+real problem:
+1. 
+2.
+tested to be benign:
+1. 
 out of which ... is vital
 Ans:
 

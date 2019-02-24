@@ -162,16 +162,16 @@ class Discriminator(torch.nn.Module):
 #     else:
 #         plt.close()
 
-def save_img_sample(generator, fixed_noise, epoch, device='cuda', image_dir='dump/copyget'):
-        # print('saving img')
-        with torch.no_grad():
-            # r = randint(0, len(dataset))
-            # real_img = dataset[r][0][:]
-            # save_image(real_img.cpu(), image_dir+'real_'+str(epoch)+'.png')
-            
-            # z = torch.randn(1, 100, 1, 1, device=device)
-            fake_img = generator(fixed_noise)
-            save_image(fake_img.cpu(), image_dir+'/gen_'+str(epoch)+'.png')
+def save_img_sample(generator, fixed_noise, epoch, device='cuda', image_dir='dump/fastcheck'):
+    print('saving img')
+    with torch.no_grad():
+        # r = randint(0, len(dataset))
+        # real_img = dataset[r][0][:]
+        # save_image(real_img.cpu(), image_dir+'real_'+str(epoch)+'.png')
+        
+        # z = torch.randn(1, 100, 1, 1, device=device)
+        fake_img = generator(fixed_noise)
+        save_image(fake_img.cpu(), image_dir+'/fast_'+str(epoch)+'.png')
 
 # def plot_result(generator, noise, num_epoch, save=False, save_dir='MNIST_DCGAN_results/', show=False, fig_size=(5, 5)):
 #     generator.eval()
@@ -285,6 +285,10 @@ for epoch in range(num_epochs):
         print('Epoch [%d/%d], Step [%d/%d], D_loss: %.4f, G_loss: %.4f'
               % (epoch+1, num_epochs, i+1, len(data_loader), D_loss.item(), G_loss.item()))
 
+        if i%50==0:
+            save_img_sample(G, fixed_noise, i)
+    break
+
     D_avg_loss = torch.mean(torch.FloatTensor(D_losses))
     G_avg_loss = torch.mean(torch.FloatTensor(G_losses))
 
@@ -296,7 +300,6 @@ for epoch in range(num_epochs):
 
 
     # Show result for fixed noise
-    save_img_sample(G, fixed_noise, epoch)
     # plot_result(G, fixed_noise, epoch, save=True, fig_size=(5, 5))
 
 
@@ -312,4 +315,4 @@ for epoch in range(num_epochs):
 #     gen_image_plots.append(imageio.imread(save_fn2))
 
 # imageio.mimsave(save_dir + 'MNIST_DCGAN_losses_epochs_{:d}'.format(num_epochs) + '.gif', loss_plots, fps=5)
-# imageio.mimsave(save_dir + 'MNIST_DCGAN_epochs_{:d}'.format(num_epochs) + '.gif', gen_image_plots, fps=5)
+# imageio.mimsave(save_dir + 'MNIST_DCGAN_epochs_{:d}'.format(num_epochs) + '.gif', gen_image_plots, fps=5) 
