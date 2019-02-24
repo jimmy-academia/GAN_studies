@@ -20,8 +20,12 @@ run experiments with `python experiments/<python script>`
 
 
 ## Tabel of Contents
-* [Experiments and Results](report.md)  
-* [ErrorLog](errorlog.md)
+* [Experiments and Results](other/report.md)  
+* [ErrorLog](other/errorlog.md)
 
 ## references: 
 https://github.com/togheppi/DCGAN/blob/master/README.md
+
+## Todo:
+* compare large, medium, small size models
+* reproduce arithemetic effects as stated in paper (with lsun dataset)

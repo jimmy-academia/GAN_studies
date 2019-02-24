@@ -1,6 +1,6 @@
 # ErrorLog
 
-backto [README](README.md)
+backto [DCGAN README](../README.md)
 
 > Code couldn't produce correct result, found on Github: [DCGAN for MNIST](https://github.com/togheppi/DCGAN/blob/master/MNIST_DCGAN_pytorch.py) and made following modifications to match the template. 
 
