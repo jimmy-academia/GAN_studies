@@ -18,12 +18,18 @@ Comparison adjusted but not checked(correct vs mine):
 5.  D zerograd when training G
 ==> Found that error is due to **model**
 real problem:
+1. One extra batchnorm layer at the end of discriminator harming its ability!! After removing batchnorm layer D(x) ~ 1 and D(G(z))~0 while training, indicating a optimal D at every step.
+
+tested to be benign (or not the most vital problem):
 1. 
-2.
-tested to be benign:
-1. 
-out of which ... is vital
-Ans:
+```
+self.layer_D = [(1024,4,2,1), (512,4,2,1), (256,4,2,1), (128,4,2,1), (1,4,1,0)]
+vs 
+self.layer_D = [(128,4,2,1), (256,4,2,1), (512,4,2,1), (1024,4,2,1), (1,4,1,0)]
+```
+2. conv use bias and relu don't use inplace
+
+Moral of the store: layersize/learning rate etc can be arbitrary set, but batchnorm layer in critical step (esp final layer) can disrupt the whole thing!
 
 ---
 

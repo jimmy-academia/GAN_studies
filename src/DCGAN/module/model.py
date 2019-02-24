@@ -44,13 +44,13 @@ class Generator(nn.Module):
         self.main = nn.ModuleList()
         in_channel = args.z_dim
         for i, x in enumerate(args.layer_G):
-            self.main.append(nn.ConvTranspose2d(in_channel, *x, bias=False))
+            self.main.append(nn.ConvTranspose2d(in_channel, *x))
             in_channel = x[0]
             if i < len(args.layer_G)-1:
                 if args.use_batchnorm:
                     self.main.append(nn.BatchNorm2d(in_channel))
                 if args.use_relu:
-                    self.main.append(nn.ReLU(True))
+                    self.main.append(nn.ReLU())
                 else:
                     self.main.append(nn.Sigmoid())
             else:
@@ -92,14 +92,13 @@ class Discriminator(nn.Module):
         self.main = nn.ModuleList()
         in_channel = args.img_channel_num
         for i, x in enumerate(args.layer_D):
-            self.main.append(nn.Conv2d(in_channel, *x, bias=False))
+            self.main.append(nn.Conv2d(in_channel, *x))
             in_channel = x[0]
-            if i > 0:
-                if args.use_batchnorm:
-                    self.main.append(nn.BatchNorm2d(in_channel))
+            if i > 0 and i < len(args.layer_D)-1 and args.use_batchnorm:
+                self.main.append(nn.BatchNorm2d(in_channel))
                 
             if i < len(args.layer_D)-1 and args.use_relu:
-                self.main.append(nn.LeakyReLU(0.2, inplace=True))
+                self.main.append(nn.LeakyReLU(0.2))
             else:
                 self.main.append(nn.Sigmoid())
             

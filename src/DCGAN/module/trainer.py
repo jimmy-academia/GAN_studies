@@ -139,8 +139,8 @@ class GANing():
 
 class Trainer():
     def __init__(self, config, args, opt):
-        # self.model = GAN(args)
-        self.model = GANing(G,D)
+        self.model = GAN(args) 
+        self.goodmodel = GANing(G,D)
         self.G_optimizer = optim.Adam(self.model.G.parameters(), lr=args.lr, betas=args.betas)
         self.D_optimizer = optim.Adam(self.model.D.parameters(), lr=args.lr, betas=args.betas)
         self.criterion = nn.BCELoss()
@@ -148,6 +148,11 @@ class Trainer():
         self.args = args
         self.opt = opt
         self.check_directories()
+        self.badmodel = GAN(args)
+        print(self.goodmodel)
+        print(self.goodmodel.G)
+        print(self.goodmodel.D)
+        print(self.model)
 
     def check_directories(self):
         for path in self.opt.dir_list:
@@ -161,8 +166,8 @@ class Trainer():
         # train 1:1
 
         device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        # if device =='cuda':
-            # self.model.cuda()
+        if device =='cuda':
+            self.model.cuda()
 
         print('train #', self.opt.epochs, 'D: %d, G:%d, save at %s'%
             (self.opt.k, self.opt.g, './dump/fastcheck'))
