@@ -10,17 +10,17 @@
 * to run experiments or use best produce best result run .py
 
 
-model structure:
+<!---
+[//]: # model structure:
 
-<img src="other/DCGAN_model.png" height=300/>
-
+[//]: # <img src="other/DCGAN_model.png" height=300/>
+-->
 
 best result (gif)
 
 ## Tabel of Contents
-[Experiments and Results](report.md)
-[ErrorLog](errorlog.md)
-
+* [Experiments and Results](report.md)  
+* [ErrorLog](errorlog.md)
 
 
 
