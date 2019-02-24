@@ -2,38 +2,31 @@
 
 backto [README](README.md)
 
-> Code couldn't produce correct result, found on Github: [DCGAN for MNIST](https://github.com/togheppi/DCGAN/blob/master/MNIST_DCGAN_pytorch.py) 
+> Code couldn't produce correct result, found on Github: [DCGAN for MNIST](https://github.com/togheppi/DCGAN/blob/master/MNIST_DCGAN_pytorch.py) and made following modifications to match the template.
+**Main problem**   
+* One extra batchnorm layer at the end of D!
 
-Comparison adjusted but not checked(correct vs mine):
-1. model size could be too small ()
-
+**other modifications**  
+added bias for Conv2d, ConvTranspose2d and relu set inplace=False
+weight init for bias (for Conv)
+model size could be too small
+```
+ 	self.layer_G = [(64,7,1,0), (32,4,2,1), (1,4,2,1)]
+    self.layer_D = [(32,4,2,1), (64,4,2,1), (1,7,1,0)]
+    to 
     self.layer_G = [(1024,4,1,0), (512,4,2,1), (256,4,2,1), (128,4,2,1), (1,4,2,1)]
     self.layer_D = [(1024,4,2,1), (512,4,2,1), (256,4,2,1), (128,4,2,1), (1,4,1,0)]
-    versus
-    self.layer_G = [(64,7,1,0), (32,4,2,1), (1,4,2,1)]
-    self.layer_D = [(32,4,2,1), (64,4,2,1), (1,7,1,0)]
-2. fake = 0, real = 1 vs. fake=1, real=0
-3. learning rate = 0.0002 vs 0.0003
-4.  errD_real + errD_fake = error, error.backwards vs errD_real.backwards, errD_fake.backwards
-5.  D zerograd when training G
-==> Found that error is due to **model**
-real problem:
-1. One extra batchnorm layer at the end of discriminator harming its ability!! After removing batchnorm layer D(x) ~ 1 and D(G(z))~0 while training, indicating a optimal D at every step.
-2. weight init for bias
-tested to be benign (or not the most vital problem):
-1. 
-```
-self.layer_D = [(1024,4,2,1), (512,4,2,1), (256,4,2,1), (128,4,2,1), (1,4,1,0)]
-vs 
-self.layer_D = [(128,4,2,1), (256,4,2,1), (512,4,2,1), (1024,4,2,1), (1,4,1,0)]
-```
-2. conv use bias and relu don't use inplace
+    to
+	self.layer_D = [(128,4,2,1), (256,4,2,1), (512,4,2,1), (1024,4,2,1), (1,4,1,0)]
+    ```
+fake = 0, real = 1 vs. fake=1, real=0   
+learning rate = 0.0002 vs 0.0003   
+ errD_real + errD_fake = error, error.backwards vs errD_real.backwards, errD_fake.backwards   
+ D zerograd when training G   
 
-Moral of the lesson:    
-1. layersize/learning rate etc can be arbitrary set, but batchnorm layer in critical step (esp final layer) can disrupt the whole thing!
-2. weight init increase speed of Generator to learn, so as to prevent discriminator from getting to good and block gradient flow.
-
-
+**more description**  
+After removing batchnorm layer at the end, D(x) ~ 1 and D(G(z))~0 while training, indicating a optimal D at every step. It therefore seems that layersize/learning rate etc. can be arbitrary set, but batchnorm layer in critical step (esp final layer) can disrupt the whole thing!
+Proper weight init increase speed of Generator to learn, and can prevent D overpowering G and cause zero gradient. This still happens from time to time.
 
 ---
 
