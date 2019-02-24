@@ -30,13 +30,25 @@ class GAN(nn.Module):
     #     self.generator.load_state_dict(torch.load(checkpoint_path+'gen.pk'))
     #     self.discriminator.load_state_dict(torch.load(checkpoint_path+'dis.pk'))
 
+# def weights_init(m):
+#     classname = m.__class__.__name__
+#     if classname.find('Conv') != -1:
+#         m.weight.data.normal_(0.0, 0.02)
+#     elif classname.find('BatchNorm') != -1:
+#         m.weight.data.normal_(1.0, 0.02)
+#         m.bias.data.fill_(0)
+
 def weights_init(m):
     classname = m.__class__.__name__
     if classname.find('Conv') != -1:
-        m.weight.data.normal_(0.0, 0.02)
-    elif classname.find('BatchNorm') != -1:
-        m.weight.data.normal_(1.0, 0.02)
-        m.bias.data.fill_(0)
+        torch.nn.init.normal_(m.weight, mean=0.0, std=0.02)
+        torch.nn.init.constant_(m.bias, 0.0)
+        # m.weight.data.normal_(0.0, 0.02)
+        # m.bias.data.constant_(0.0)
+    # elif classname.find('BatchNorm') != -1:
+    #     m.weight.data.normal_(1.0, 0.02)
+    #     m.bias.data.fill_(0)
+
 
 class Generator(nn.Module):
     def __init__(self, args):

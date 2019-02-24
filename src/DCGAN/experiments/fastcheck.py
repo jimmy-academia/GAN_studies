@@ -9,7 +9,7 @@ def main():
     config, args, opt = configurations('fastcheck')
 
     trainer = Trainer(config, args, opt)
-    trainer.fastcheck('test')
+    trainer.fastcheck('newtest')
 if __name__ == '__main__':
     main()
 

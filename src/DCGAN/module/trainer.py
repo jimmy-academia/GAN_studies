@@ -174,7 +174,7 @@ class Trainer():
         self.opt.imgsample_epoch = self.opt.epochs//10
         self.train_one_epoch(dataloader, device, 1)
             # if (i+1)%self.opt.imgsample_epoch == 0:
-        self.save_img_sample(dataset, device, './dump/fastcheck', code)
+        # self.save_img_sample(dataset, device, './dump/fastcheck', code)
 
 
     def train(self):
@@ -261,10 +261,10 @@ class Trainer():
                 %(index, length, err_Dis.item(), err_Gen.item(), Dis_out, Dis_gen_out)
             # progress_bar(batch_idx, len(dataloader), message)
             pbar.set_description(message)
-            if index == 100:
-                break
+            if index % 100==0:
+                self.save_img_sample(device, 'dump/fastcheck', '%d'%index)
 
-    def save_img_sample(self, dataset, device, image_dir, code='gen_'):
+    def save_img_sample(self, device, image_dir, code='gen_'):
         # print('saving img')
         with torch.no_grad():
             # r = randint(0, len(dataset))

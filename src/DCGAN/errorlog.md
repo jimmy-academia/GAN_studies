@@ -19,7 +19,7 @@ Comparison adjusted but not checked(correct vs mine):
 ==> Found that error is due to **model**
 real problem:
 1. One extra batchnorm layer at the end of discriminator harming its ability!! After removing batchnorm layer D(x) ~ 1 and D(G(z))~0 while training, indicating a optimal D at every step.
-
+2. weight init for bias
 tested to be benign (or not the most vital problem):
 1. 
 ```
@@ -29,7 +29,11 @@ self.layer_D = [(128,4,2,1), (256,4,2,1), (512,4,2,1), (1024,4,2,1), (1,4,1,0)]
 ```
 2. conv use bias and relu don't use inplace
 
-Moral of the store: layersize/learning rate etc can be arbitrary set, but batchnorm layer in critical step (esp final layer) can disrupt the whole thing!
+Moral of the lesson:    
+1. layersize/learning rate etc can be arbitrary set, but batchnorm layer in critical step (esp final layer) can disrupt the whole thing!
+2. weight init increase speed of Generator to learn, so as to prevent discriminator from getting to good and block gradient flow.
+
+
 
 ---
 
