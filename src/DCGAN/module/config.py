@@ -87,7 +87,7 @@ class training_param():
 		#train setting
 		self.g = 1
 		self.k = 1
-		self.epochs = 20
+		self.epochs = 40
 
 		# directories
 		self.task_dir = config.task_result_root+'/'+config.taskname

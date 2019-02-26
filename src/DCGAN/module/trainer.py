@@ -77,12 +77,8 @@ class Trainer():
         # pbar = tqdm(enumerate(dataloader))
         pbar = tqdm(dataloader)
         # for index, (inputs, __) in pbar:
-        tmp = 0
         epoch_records = []
         for inputs, __ in pbar:
-            tmp = tmp+1
-            if tmp==100:
-                break
             batch_size = inputs.shape[0]
             label_real = Variable(torch.ones(batch_size).cuda())
             label_fake = Variable(torch.zeros(batch_size).cuda())
