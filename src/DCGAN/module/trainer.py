@@ -177,17 +177,16 @@ class Trainer():
         ax.plot(four_records[0], label='D loss', color='#CC0000')
         ax.plot(four_records[1], label='G loss', color='#FF8000')
         ax.tick_params('y', colors = '#CC0000')
-        ax.legend()
+        ax.legend(loc='upper left')
 
         ax2 = ax.twinx()
         ax2.set_ylim(0, np.max(four_records[2:])*1.1)
         ax2.set_ylabel('D() values')
-        ax2.plot(four_records[2], label='D(x)', color='#0080FF')
-        ax2.plot(four_records[3], label='D(G(z))', color='#808080')
+        ax2.plot(four_records[2], label='D(x)', color='#0080FF', linestyle=':')
+        ax2.plot(four_records[3], label='D(G(z))', color='#808080', linestyle=':')
         ax2.tick_params('y', colors='k')
-        ax2.legend()
+        ax2.legend(loc='upper right')
 
-        # fig.text(0.5, 0.04, img_name, ha='center')
         
         filepath = self.opt.task_dir+'/loss_plots'
         if not os.path.exists(filepath):
@@ -195,7 +194,6 @@ class Trainer():
         plt.savefig(filepath+'/'+img_name+'.png')
         plt.close()
 
-# fig.tight_layout()
 
 
 
