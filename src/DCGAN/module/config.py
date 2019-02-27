@@ -56,7 +56,7 @@ parser.add_argument('--taskname', type=str)
 dir_args = parser.add_argument_group('directories')
 dir_args.add_argument('--data_dir_root', type=str, default='/home/jimmy/datastore',
 	help='root for data download spot, \'/mnist/\' etc to be added')
-dir_args.add_argument('--task_result_root', type=str, default='./results')
+dir_args.add_argument('--task_result_root', type=str, default='./output')
 # task related directories in training_param
 
 class model_param():

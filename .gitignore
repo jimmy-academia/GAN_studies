@@ -1,6 +1,5 @@
 **/__pycache__
 **/img
-**/dump
-**/results
+**/output
 
 # git rm --cached /path/to/file
