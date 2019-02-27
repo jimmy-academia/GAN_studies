@@ -2,7 +2,7 @@
 """trains DCGAN on mnist for 20 epochs and creates grid display genarated from fixed noise
     
 Example:
-    in parent directory: python experiments/02basic_mnist.py
+    in parent directory: python experiments/03lsun_basic.py
 
 
 __author__  = '{Jimmy Yeh}'
@@ -18,17 +18,14 @@ from module.config import configurations
 from module.utils import check_directories
 
 def main():
-    config, args, opt = configurations('MODLE_MODIFY_relu')
+    config, args, opt = configurations('LSUN_basic')
     check_directories(opt.dir_list)
+    config.datatype='lsun'
+    opt.save_model=True    
+    
     trainer = Trainer(config, args, opt)
-    args.use_relu = False
     trainer.train()
 
-    config, args, opt = configurations('MODLE_MODIFY_batchnorm')
-    check_directories(opt.dir_list)
-    trainer = Trainer(config, args, opt)
-    args.use_batchnorm = False
-    trainer.train()
 
 
 if __name__ == '__main__':

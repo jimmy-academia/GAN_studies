@@ -21,21 +21,38 @@ from torchvision import datasets
 from torchvision import transforms
 
 #main function to be called
-def make_dataset(data_dir_root, args):
-    return MNIST(data_dir_root, args)
+def make_dataset(data_dir_root, datatype, img_size):
+    if datatype=='mnist':
+        return MNIST(data_dir_root, img_size)
+    elif datatype=='lsun'
+        return LSUN(data_dir_root, img_size)
+
 
 def make_dataloader(dataset, batch_size):
     return data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
 #list of datasets to use
-def MNIST(data_dir_root, args):
+def MNIST(data_dir_root, img_size):
     trans = transforms.Compose([
-        transforms.Resize(args.img_size),
+        transforms.Resize(img_size),
         transforms.ToTensor(),
         transforms.Normalize(mean=(0.5,0.5,0.5), std=(0.5,0.5,0.5))
     ])
 
     dataset = datasets.MNIST(
         data_dir_root+'/mnist', train=True, download=True, transform=trans
+    )
+    return dataset
+
+def LSUN(data_dir_root, img_size):
+    trans = transforms.Compose([
+        transforms.Resize(img_size),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=(0.5,0.5,0.5), std=(0.5,0.5,0.5))
+    ])
+
+    classes = ['bedroom_train']
+    dataset = datasets.LSUN(
+        data_dir_root+'/lsun',classes=classes, transform=trans
     )
     return dataset

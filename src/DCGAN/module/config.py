@@ -71,7 +71,7 @@ class model_param():
 		#trainer
 		self.lr = 0.0002
 		self.betas = (0.5, 0.999)
-		self.refresh(config)
+		# self.refresh(config)
 
 		#other
 		self.img_size = 64
@@ -92,4 +92,8 @@ class training_param():
 		# directories
 		self.task_dir = config.task_result_root+'/'+config.taskname
 		self.dir_list = [self.task_dir]
+
+		self.save_model=False
+		self.model_filepath = self.task_dir+'/model.t7'
+
 
