@@ -10,6 +10,7 @@ comparison between large, medium and small sized GANs
 model parameters
 
 ```
+
 <table align='center'>
 <tr align='center'>
 <td> GAN losses</td>
@@ -20,6 +21,7 @@ model parameters
 <td><img src = 'other/generated_imgs.gif'>
 </tr>
 </table>
+
 ```
 model parameters
 
@@ -35,6 +37,7 @@ model parameters
 <td><img src = 'other/generated_imgs.gif'>
 </tr>
 </table>
+
 ```
 model parameters
 

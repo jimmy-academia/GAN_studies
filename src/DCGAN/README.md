@@ -13,8 +13,8 @@ run experiments with `python experiments/<python script>`
 <td> Generated images</td>
 </tr>
 <tr>
-<td><img src = 'other/loss_plots.gif'>
-<td><img src = 'other/generated_imgs.gif'>
+<td><img src = 'other/basic_mnist_loss_plots.gif'>
+<td><img src = 'other/basic_mnist_generated_imgs.gif'>
 </tr>
 </table>
 
