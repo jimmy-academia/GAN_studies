@@ -20,16 +20,23 @@ result: <a href="doc/paper_review/week01.md">paper review</a><br>
 finish date: Feb. 19
 </p>
  
----
-
-</details>
-
 * week 2  
 scheduled: Feb. 8 - 14  
 
     1. read paper on DCGAN: Unsupervised Representation Learning with Deep Convolutional Generative   Adversarial Networks  https://arxiv.org/pdf/1511.06434.pdf  
     2. do DCGAN on cifar10 following Keep Calm and train a GAN  
 https://medium.com/@utk.is.here/keep-calm-and-train-a-gan-pitfalls-and-tips-on-training-generative-adversarial-networks-edd529764aa9  
+
+<p align="right">  
+result: <a href="doc/paper_review/week02.md">paper review</a><a href="src/DCGAN/README.md">reproduce DCGAN</a><br>  
+finish date: Feb. 19
+</p>
+
+---
+
+</details>
+
+
 
 * week 3  
 scheduled: Feb. 15 - 21  

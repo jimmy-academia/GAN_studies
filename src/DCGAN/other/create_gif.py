@@ -11,15 +11,13 @@ parser.add_argument('--epochs', type=int, default=20)
 args = parser.parse_args()
 
 # to plant within code
-args.epochs=40
-args.dir =  'results/BASIC_MNIST/loss_plots'
-args.name = 'basic_mnist_loss_plots'
 
 
-if args.dir is None:
-	print('WARANING: SPECIFY INPUT DIRECTORY --dir')
-if args.dir is None:
-	print('WARANING: SPECIFY GIF NAME --name')
+
+# if args.dir is None:
+# 	print('WARANING: SPECIFY INPUT DIRECTORY --dir')
+# if args.dir is None:
+# 	print('WARANING: SPECIFY GIF NAME --name')
 
 ## hardcode Epoch_1.png
 def do_gif():
@@ -38,7 +36,17 @@ def do_gif():
 	imageio.mimsave(filename, plots, fps=3)
 	print('%s done'%filename)
 
+args.epochs=40
+args.dir =  'output/BASIC_MNIST/loss_plots'
+args.name = 'basic_mnist_loss_plots'
 do_gif()
-args.dir =  'results/BASIC_MNIST/generated_imgs'
+args.dir =  'output/BASIC_MNIST/generated_imgs'
 args.name = 'basic_mnist_generated_imgs'
+do_gif()
+
+args.dir =  'output/LSUN_basic/loss_plots'
+args.name = 'basic_lsun_loss_plots'
+do_gif()
+args.dir =  'output/LSUN_basic/generated_imgs'
+args.name = 'basic_lsun_generated_imgs'
 do_gif()

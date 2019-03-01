@@ -53,7 +53,7 @@ class Trainer():
 
     def train(self):
         print('training for task:', self.config.taskname)
-        dataset = make_dataset(self.config.data_dir_root, self.args)
+        dataset = make_dataset(self.config.data_dir_root, self.config.datatype, self.args.img_size)
         dataloader = make_dataloader(dataset, batch_size=self.args.batch_size)
 
         if self.device =='cuda':
@@ -69,6 +69,8 @@ class Trainer():
             # self.save_img_sample(str(i))
             self.save_fixed_grid_sample(fixed_z,'Epoch_'+str(i))
             self.save_loss_plot('Epoch_'+str(i))
+        if self.opt.save_model:
+            self.model.save(self.opt.model_filepath)
 
     def train_one_epoch(self, dataloader):
         real_label = 1

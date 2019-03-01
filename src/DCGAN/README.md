@@ -6,7 +6,7 @@
 run experiments with `python experiments/<python script>`
 
 ### Initial Results
-* For learning rate = 0.0002 (Adam optimizer), batch size = 128, # of epochs = 20:
+* MNIST for learning rate = 0.0002 (Adam optimizer), batch size = 128, # of epochs = 40:
 <table align='center'>
 <tr align='center'>
 <td> GAN losses</td>
@@ -19,12 +19,25 @@ run experiments with `python experiments/<python script>`
 </table>
 
 
-## Tabel of Contents
-* [Experiments and Results](other/report.md)  
-* [ErrorLog](other/errorlog.md)
+<!-- * lsun bedroom for learning rate = 0.0002 (Adam optimizer), batch size = 128, # of epochs = 40:
+<table align='center'>
+<tr align='center'>
+<td> GAN losses</td>
+<td> Generated images</td>
+</tr>
+<tr>
+<td><img src = 'other/basic_lsun_loss_plots.gif'>
+<td><img src = 'other/basic_lsun_generated_imgs.gif'>
+</tr>
+</table> -->
 
-## references: 
-https://github.com/togheppi/DCGAN/blob/master/README.md
+<!-- ## Tabel of Contents -->
+<!-- * [Experiments and Results](other/report.md)   -->
+
+
+### references: 
+* [ErrorLog](other/errorlog.md)
+* other codes: https://github.com/togheppi/DCGAN/blob/master/README.md
 
 ## Todo:
 * compare large, medium, small size models

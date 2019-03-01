@@ -24,6 +24,18 @@ class GAN(nn.Module):
         self.D = Discriminator(args)
         self.D.apply(weights_init)
 
+    def save(self, filepath):
+        state = {
+            'gen_net': self.G.state_dict(),
+            'dis_net': self.D.state_dict(),
+        }
+        torch.save(state, filepath)
+
+    def load(self, filepath):
+        state = torch.load(filepath)
+        self.G.load_state_dict(state['gen_net'])
+        self.D.load_state_dict(state['dis_net'])
+
 def weights_init(m):
     classname = m.__class__.__name__
     if classname.find('Conv') != -1:
