@@ -68,6 +68,7 @@ class training_param():
 		self.model_filepath = self.task_dir+'/model.t7'
 
 
+<<<<<<< HEAD
 def configurations(taskname=None, datatype='mnist'):
 
 	# determine datatype (will effect model)
@@ -102,3 +103,5 @@ def configurations(taskname=None, datatype='mnist'):
 
 
 
+=======
+>>>>>>> 8f9947b5decdc4cb0edbecf3b115a678ab0c453e

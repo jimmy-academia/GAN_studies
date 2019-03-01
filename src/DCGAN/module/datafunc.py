@@ -24,7 +24,11 @@ from torchvision import transforms
 def make_dataset(data_dir_root, datatype, img_size):
     if datatype=='mnist':
         return MNIST(data_dir_root, img_size)
+<<<<<<< HEAD
     elif datatype=='lsun':
+=======
+    elif datatype=='lsun'
+>>>>>>> 8f9947b5decdc4cb0edbecf3b115a678ab0c453e
         return LSUN(data_dir_root, img_size)
 
 
@@ -47,7 +51,10 @@ def MNIST(data_dir_root, img_size):
 def LSUN(data_dir_root, img_size):
     trans = transforms.Compose([
         transforms.Resize(img_size),
+<<<<<<< HEAD
         transforms.CenterCrop(img_size),
+=======
+>>>>>>> 8f9947b5decdc4cb0edbecf3b115a678ab0c453e
         transforms.ToTensor(),
         transforms.Normalize(mean=(0.5,0.5,0.5), std=(0.5,0.5,0.5))
     ])

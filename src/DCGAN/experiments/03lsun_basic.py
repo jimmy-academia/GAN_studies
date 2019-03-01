@@ -18,8 +18,10 @@ from module.config import configurations
 from module.utils import check_directories
 
 def main():
-    config, args, opt = configurations('LSUN_basic', 'lsun')
+
+    config, args, opt = configurations('LSUN_basic')
     check_directories(opt.dir_list)
+    config.datatype='lsun'
     opt.save_model=True    
     
     trainer = Trainer(config, args, opt)
