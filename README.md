@@ -21,13 +21,13 @@ finish date: Feb. 19
 </p>
  
 * week 2  
-scheduled: Feb. 22 - Feb.28  
+scheduled: Feb. 22 - Feb. 28  
 
     1. read paper on DCGAN: Unsupervised Representation Learning with Deep Convolutional Generative   Adversarial Networks  https://arxiv.org/pdf/1511.06434.pdf  
     2. reproduce DCGAN 
 
 <p align="right">  
-result: <a href="doc/paper_review/week02.md">paper review</a>, <a href="src/DCGAN/README.md">reproduce DCGAN</a><br>  
+result: <a href="doc/paper_review/week02.md">paper review</a>, <a href="src/DCGAN/">reproduce DCGAN</a><br>  
 finish date: Mar. 1
 </p>
 
