@@ -30,27 +30,42 @@ def computer_time():
 class model_param():
 	def __init__(self, config):
 		if config.datatype =='mnist':
+			self.datatype='mnist'
 			self.img_channel_num = 1
 		else:
+			self.datatype='else'
 			self.img_channel_num = 3
-		self.z_dim = 100
+		self.img_size = 28
+		self.z_dim = 62
+		self.continuous_weight=0.5
+
+		self.refresh()
+
+		self.cc_dim = 1
+		self.dc_dim = 10
+		
 		self.layer_G = [(1024,4,1,0), (512,4,2,1), (256,4,2,1), (128,4,2,1), (self.img_channel_num,4,2,1)]
 		self.layer_D = [(128,4,2,1), (256,4,2,1), (512,4,2,1), (1024,4,2,1), (1,4,1,0)]
 		self.use_batchnorm = True
 		self.use_relu = True
 		
 		#trainer
-		self.lr = 0.0002
+		self.lrD = 0.0002
+		self.lrG = 0.001
 		self.betas = (0.5, 0.999)
 		# self.refresh(config)
 
 		#other
-		self.img_size = 64
-		self.batch_size = 128
+		self.batch_size = 16
 
-	def refresh(self, config):
-		if config.datatype == 'cifar10':
-			pass
+	def refresh(self):
+
+		if self.datatype=='else':
+			self.img_size=64
+			self.z_dim=128
+			self.continuous_weight=1 # 0.1~0.5 for MNIST / 1.0 for CelebA
+
+			
 
 # trainer setting
 class training_param():
@@ -59,6 +74,7 @@ class training_param():
 		self.g = 1
 		self.k = 1
 		self.epochs = 40
+		self.refresh(config)
 
 		# directories
 		self.task_dir = config.task_result_root+'/'+config.taskname
@@ -66,13 +82,15 @@ class training_param():
 
 		self.save_model=False
 		self.model_filepath = self.task_dir+'/model.t7'
+	def refresh(self, config):
+		if config.datatype!='mnist':
+			self.epochs = 4
 
 
-<<<<<<< HEAD
 def configurations(taskname=None, datatype='mnist'):
 
 	# determine datatype (will effect model)
-	parser = argparse.ArgumentParser(description='test')
+	parser = argparse.ArgumentParser(description='INFOGAN')
 	parser.add_argument('--taskname', type=str, default=taskname)
 	parser.add_argument('--datatype', type=str, default=datatype,
 						help='choose: mnist, cifar10, lsun, faces')
@@ -80,8 +98,9 @@ def configurations(taskname=None, datatype='mnist'):
 
 	# permanent directories
 	dir_args = parser.add_argument_group('directories')
-	dir_args.add_argument('--data_dir_root', type=str, default='/shared/datastore',
+	dir_args.add_argument('--data_dir_root', type=str, default='~/datastore',
 		help='root for data download spot, \'/mnist/\' etc to be added')
+	#### new pytorch setting, mnist should not be added!!!
 	dir_args.add_argument('--task_result_root', type=str, default='./output')
 	# task related directories in training_param
 
@@ -102,6 +121,3 @@ def configurations(taskname=None, datatype='mnist'):
 	return config, args, opt
 
 
-
-=======
->>>>>>> 8f9947b5decdc4cb0edbecf3b115a678ab0c453e

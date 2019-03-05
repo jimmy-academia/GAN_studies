@@ -38,11 +38,38 @@ import numpy as np
 
 import os
 
+
+def to_variable(x):
+    if torch.cuda.is_available():
+        x = x.cuda()
+    return Variable(x)
+
+##### Helper Function for Math
+def denorm(x):
+    out = (x + 1) / 2
+    return out.clamp(0, 1)
+
+# InfoGAN Function (Gaussian)
+def gen_cc(n_size, dim):
+    return torch.Tensor(np.random.randn(n_size, dim) * 0.5 + 0.0)
+
+# InfoGAN Function (Multi-Nomial)
+def gen_dc(n_size, dim):
+    codes=[]
+    code = np.zeros((n_size, dim))
+    random_cate = np.random.randint(0, dim, n_size)
+    code[range(n_size), random_cate] = 1
+    codes.append(code)
+    codes = np.concatenate(codes,1)
+    return torch.Tensor(codes)
+
+
+
 class Trainer():
     def __init__(self, config, args, opt):
         self.model = GAN(args) 
-        self.G_optimizer = optim.Adam(self.model.G.parameters(), lr=args.lr, betas=args.betas)
-        self.D_optimizer = optim.Adam(self.model.D.parameters(), lr=args.lr, betas=args.betas)
+        self.G_optimizer = optim.Adam(self.model.G.parameters(), lr=args.lrG, betas=args.betas)
+        self.D_optimizer = optim.Adam(self.model.D.parameters(), lr=args.lrD, betas=args.betas)
         self.criterion = nn.BCELoss()
         self.config = config
         self.args = args
@@ -73,60 +100,52 @@ class Trainer():
             self.model.save(self.opt.model_filepath)
 
     def train_one_epoch(self, dataloader):
-        real_label = 1
-        fake_label = 0
-
-        # pbar = tqdm(enumerate(dataloader))
         pbar = tqdm(dataloader)
-        # for index, (inputs, __) in pbar:
         epoch_records = []
-        for inputs, __ in pbar:
-            batch_size = inputs.shape[0]
+        ## different for calebA (no label)
+        for images, __ in pbar:
+            batch_size = images.shape[0]
             label_real = Variable(torch.ones(batch_size).cuda())
             label_fake = Variable(torch.zeros(batch_size).cuda())
+            
+            images = to_variable(images)
 
             # Discriminator 
-            for __ in range(self.opt.k):
-                inputs = inputs.to(self.device)
-                inputs = Variable(inputs)
-                out = self.model.D(inputs)
-                out = out.view(-1)
-                err_Dis_real = self.criterion(out, label_real)
-                Dis_out = out.mean().item()
+            for __ in range(1):                
+                z = to_variable(torch.randn(batch_size, self.args.z_dim))
+                cc = to_variable(gen_cc(batch_size, self.args.cc_dim))
+                dc = to_variable(gen_cc(batch_size, self.args.dc_dim))
+                fake_images = self.model.G(torch.cat((z, cc, dc), 1))
 
-                z = torch.randn(batch_size, 100, 1, 1, device=self.device)
-                z = Variable(z)
+                d_out_real = self.model.D(images)#.view(-1)
+                d_out_fake = self.model.D(fake_images)#.view(-1)
+                # err_Dis_real = self.criterion(d_out_real, label_real)
+                # err_Dis_fake = self.criterion(d_out_fake, label_fake)
+                d_loss_a = -torch.mean(torch.log(d_out_real[:,0]) + torch.log(1 - d_out_fake[:,0]))
 
-                fake_inputs = self.model.G(z)
-                out = self.model.D(fake_inputs)
-                out = out.view(-1)
-                err_Dis_fake = self.criterion(out, label_fake)
+                output_cc = d_out_fake[:, 1:1+self.args.cc_dim]
+                output_dc = d_out_fake[:, 1+self.args.cc_dim:]
+                d_loss_cc = torch.mean((((output_cc - 0.0) / 0.5) ** 2))
+                d_loss_dc = -(torch.mean(torch.sum(dc * output_dc, 1)) + torch.mean(torch.sum(dc * dc, 1)))
 
-                err_Dis = err_Dis_fake + err_Dis_real
+                d_loss = d_loss_a + self.args.continuous_weight * d_loss_cc + 1.0 * d_loss_dc
+
                 self.model.D.zero_grad()
-                err_Dis.backward()
+                d_loss.backward(retain_graph=True)
                 self.D_optimizer.step()
-
+                
+                Dis_out = d_out_real.view(-1).mean().item()
+                Dis_gen_out = d_out_fake.view(-1).mean().item()
             # Generator  maximize log(D(G(z)))
-            for __ in range(self.opt.g):
-                
-                z = torch.randn(batch_size, 100, 1, 1, device=self.device)
-                z = Variable(z)
-                fake_inputs = self.model.G(z)
-
-                out = self.model.D(fake_inputs)
-                out = out.view(-1)
-                Dis_gen_out = out.mean().item()
-
-                err_Gen = self.criterion(out, label_real)
-                
-                self.model.D.zero_grad()
+            for __ in range(1):
+                g_loss_a = -torch.mean(torch.log(d_out_fake[:,0]))
+                g_loss = g_loss_a + self.args.continuous_weight * d_loss_cc + 1.0 * d_loss_dc
+                self.model.D.zero_grad() #???
                 self.model.G.zero_grad()
-                err_Gen.backward()
+                g_loss.backward()
                 self.G_optimizer.step()
 
-
-            batch_record = (err_Dis.item(), err_Gen.item(), Dis_out, Dis_gen_out)
+            batch_record = (d_loss.item(), g_loss.item(), Dis_out, Dis_gen_out)
             epoch_records.append(list(batch_record))
             message = 'errD:%.4f,errG:%.4f,D(x):%.4f,D(G(z)):%.4f'%batch_record
             pbar.set_description(message)
