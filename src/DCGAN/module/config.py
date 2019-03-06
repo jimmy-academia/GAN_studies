@@ -68,20 +68,19 @@ class training_param():
 		self.model_filepath = self.task_dir+'/model.t7'
 
 
-<<<<<<< HEAD
 def configurations(taskname=None, datatype='mnist'):
 
 	# determine datatype (will effect model)
 	parser = argparse.ArgumentParser(description='test')
 	parser.add_argument('--taskname', type=str, default=taskname)
 	parser.add_argument('--datatype', type=str, default=datatype,
-						help='choose: mnist, cifar10, lsun, faces')
+						help='choose: mnist, lsun, celeba')
 
 
 	# permanent directories
 	dir_args = parser.add_argument_group('directories')
-	dir_args.add_argument('--data_dir_root', type=str, default='/shared/datastore',
-		help='root for data download spot, \'/mnist/\' etc to be added')
+	dir_args.add_argument('--data_dir_root', type=str, default='~/datastore',
+		help='root for data download spot')
 	dir_args.add_argument('--task_result_root', type=str, default='./output')
 	# task related directories in training_param
 
@@ -101,7 +100,3 @@ def configurations(taskname=None, datatype='mnist'):
 	opt = training_param(config)
 	return config, args, opt
 
-
-
-=======
->>>>>>> 8f9947b5decdc4cb0edbecf3b115a678ab0c453e

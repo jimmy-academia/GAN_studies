@@ -24,8 +24,10 @@ from torchvision import transforms
 def make_dataset(data_dir_root, datatype, img_size):
     if datatype=='mnist':
         return MNIST(data_dir_root, img_size)
-    elif datatype=='lsun'
+    elif datatype=='lsun':
         return LSUN(data_dir_root, img_size)
+    elif datatype=='celeba':
+        return CELEBA(data_dir_root, img_size)
 
 
 def make_dataloader(dataset, batch_size):
@@ -40,7 +42,7 @@ def MNIST(data_dir_root, img_size):
     ])
 
     dataset = datasets.MNIST(
-        data_dir_root+'/mnist', train=True, download=True, transform=trans
+        data_dir_root, train=True, download=True, transform=trans
     )
     return dataset
 
@@ -54,6 +56,21 @@ def LSUN(data_dir_root, img_size):
 
     classes = ['bedroom_train']
     dataset = datasets.LSUN(
-        data_dir_root+'/lsun',classes=classes, transform=trans
+        data_dir_root+'/LSUN',classes=classes, transform=trans
     )
     return dataset
+
+
+def CELEBA(data_dir_root, img_size):
+    trans = transforms.Compose([
+        transforms.Resize(image_size),
+        transforms.CenterCrop(image_size),
+        transforms.ToTensor(),
+        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+        ])
+
+    dataset = dataset.ImageFolder(
+        root=dataroot+'/CELEBA/img_align_celeba/',trans
+    )
+    return dataset
+

@@ -44,9 +44,9 @@ args.dir =  'output/BASIC_MNIST/generated_imgs'
 args.name = 'basic_mnist_generated_imgs'
 do_gif()
 
-args.dir =  'output/LSUN_basic/loss_plots'
+args.dir =  'output/BASIC_LSUN/loss_plots'
 args.name = 'basic_lsun_loss_plots'
 do_gif()
-args.dir =  'output/LSUN_basic/generated_imgs'
+args.dir =  'output/BASIC_LSUN/generated_imgs'
 args.name = 'basic_lsun_generated_imgs'
 do_gif()

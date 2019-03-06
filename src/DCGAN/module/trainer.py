@@ -76,11 +76,14 @@ class Trainer():
         real_label = 1
         fake_label = 0
 
-        # pbar = tqdm(enumerate(dataloader))
         pbar = tqdm(dataloader)
-        # for index, (inputs, __) in pbar:
         epoch_records = []
-        for inputs, __ in pbar:
+        for batch_data in pbar:
+            if self.config.datatype == 'mnist':
+                inputs, __ = batch_data
+            else:
+                inputs = batch_data
+
             batch_size = inputs.shape[0]
             label_real = Variable(torch.ones(batch_size).cuda())
             label_fake = Variable(torch.zeros(batch_size).cuda())

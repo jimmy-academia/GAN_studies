@@ -1,0 +1,1 @@
+scr contains codes for various GAN implementation
