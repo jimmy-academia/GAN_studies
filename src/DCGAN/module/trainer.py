@@ -20,7 +20,7 @@ __email__   = '{marrch30@gmail.com}'
 """
 
 from module.model import GAN
-from module.datafunc import make_dataset, make_dataloader
+from module.datafunc import make_dataloader
 
 import torch
 from torch import optim
@@ -53,8 +53,10 @@ class Trainer():
 
     def train(self):
         print('training for task:', self.config.taskname)
-        dataset = make_dataset(self.config.data_dir_root, self.config.datatype, self.args.img_size)
-        dataloader = make_dataloader(dataset, batch_size=self.args.batch_size)
+        dataloader = make_dataloader(   self.config.data_dir_root, 
+                                        self.config.datatype, 
+                                        self.args.img_size,
+                                        self.args.batch_size)
 
         if self.device =='cuda':
             self.model.cuda()
@@ -78,15 +80,24 @@ class Trainer():
 
         pbar = tqdm(dataloader)
         epoch_records = []
+
         for batch_data in pbar:
-            if self.config.datatype == 'mnist':
+            if self.config.datatype == 'mnist' or 'celeba':
                 inputs, __ = batch_data
             else:
                 inputs = batch_data
+            if self.config.datatype == 'celeba':
+                inputs = torch.FloatTensor(inputs)
 
-            batch_size = inputs.shape[0]
-            label_real = Variable(torch.ones(batch_size).cuda())
-            label_fake = Variable(torch.zeros(batch_size).cuda())
+            if self.config.datatype == 'lsun':
+                ## train faster by skipping....
+                ratio = 4000./len(dataloader)
+                if np.random.rand() > ratio:
+                    continue
+
+            # batch_size = inputs.shape[0]
+            label_real = Variable(torch.ones(self.args.batch_size).cuda())
+            label_fake = Variable(torch.zeros(self.args.batch_size).cuda())
 
             # Discriminator 
             for __ in range(self.opt.k):
@@ -97,7 +108,7 @@ class Trainer():
                 err_Dis_real = self.criterion(out, label_real)
                 Dis_out = out.mean().item()
 
-                z = torch.randn(batch_size, 100, 1, 1, device=self.device)
+                z = torch.randn(self.args.batch_size, 100, 1, 1, device=self.device)
                 z = Variable(z)
 
                 fake_inputs = self.model.G(z)
@@ -113,7 +124,7 @@ class Trainer():
             # Generator  maximize log(D(G(z)))
             for __ in range(self.opt.g):
                 
-                z = torch.randn(batch_size, 100, 1, 1, device=self.device)
+                z = torch.randn(self.args.batch_size, 100, 1, 1, device=self.device)
                 z = Variable(z)
                 fake_inputs = self.model.G(z)
 

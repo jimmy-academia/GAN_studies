@@ -34,8 +34,12 @@ class model_param():
 		else:
 			self.img_channel_num = 3
 		self.z_dim = 100
-		self.layer_G = [(1024,4,1,0), (512,4,2,1), (256,4,2,1), (128,4,2,1), (self.img_channel_num,4,2,1)]
-		self.layer_D = [(128,4,2,1), (256,4,2,1), (512,4,2,1), (1024,4,2,1), (1,4,1,0)]
+		self.ngf = 128
+		self.ndf = 128
+		# self.layer_G = [(1024,4,1,0), (512,4,2,1), (256,4,2,1), (128,4,2,1), (self.img_channel_num,4,2,1)]
+		self.layer_G = [(self.ngf*8,4,1,0), (self.ngf*4,4,2,1), (self.ngf*2,4,2,1), (self.ngf,4,2,1), (self.img_channel_num,4,2,1)]
+		# self.layer_D = [(128,4,2,1), (256,4,2,1), (512,4,2,1), (1024,4,2,1), (1,4,1,0)]
+		self.layer_D = [(self.ndf,4,2,1), (self.ndf*2,4,2,1), (self.ndf*4,4,2,1), (self.ndf*8,4,2,1), (1,4,1,0)]
 		self.use_batchnorm = True
 		self.use_relu = True
 		
@@ -57,9 +61,10 @@ class training_param():
 	def __init__(self, config):
 		#train setting
 		self.g = 1
+		if config.datatype=='lsun' or 'celeba':
+			self.g = 2
 		self.k = 1
 		self.epochs = 40
-
 		# directories
 		self.task_dir = config.task_result_root+'/'+config.taskname
 		self.dir_list = [self.task_dir]
@@ -79,7 +84,7 @@ def configurations(taskname=None, datatype='mnist'):
 
 	# permanent directories
 	dir_args = parser.add_argument_group('directories')
-	dir_args.add_argument('--data_dir_root', type=str, default='~/datastore',
+	dir_args.add_argument('--data_dir_root', type=str, default='/home/jimmy/datastore',
 		help='root for data download spot')
 	dir_args.add_argument('--task_result_root', type=str, default='./output')
 	# task related directories in training_param

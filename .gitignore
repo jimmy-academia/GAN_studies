@@ -2,4 +2,5 @@
 **/img
 **/output
 
+**/_cache*
 # git rm --cached /path/to/file

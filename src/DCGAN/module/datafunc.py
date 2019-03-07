@@ -19,26 +19,29 @@ import numpy as np
 from torch.utils import data
 from torchvision import datasets
 from torchvision import transforms
+from torch.utils.data.sampler import SubsetRandomSampler 
 
 #main function to be called
-def make_dataset(data_dir_root, datatype, img_size):
+def make_dataloader(data_dir_root, datatype, img_size, batch_size):
     if datatype=='mnist':
-        return MNIST(data_dir_root, img_size)
+        dataset = MNIST(data_dir_root, img_size)
+        return data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
+
     elif datatype=='lsun':
-        return LSUN(data_dir_root, img_size)
+        dataset = LSUN(data_dir_root, img_size)
+        return data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
+
     elif datatype=='celeba':
-        return CELEBA(data_dir_root, img_size)
+        dataset = CELEBA(data_dir_root, img_size)
+        return data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
-
-def make_dataloader(dataset, batch_size):
-    return data.DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
 #list of datasets to use
 def MNIST(data_dir_root, img_size):
     trans = transforms.Compose([
         transforms.Resize(img_size),
         transforms.ToTensor(),
-        transforms.Normalize(mean=(0.5,0.5,0.5), std=(0.5,0.5,0.5))
+        # transforms.Normalize(mean=(0.5,0.5,0.5), std=(0.5,0.5,0.5))
     ])
 
     dataset = datasets.MNIST(
@@ -63,14 +66,14 @@ def LSUN(data_dir_root, img_size):
 
 def CELEBA(data_dir_root, img_size):
     trans = transforms.Compose([
-        transforms.Resize(image_size),
-        transforms.CenterCrop(image_size),
+        transforms.Resize(img_size),
+        transforms.CenterCrop(img_size),
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
         ])
 
-    dataset = dataset.ImageFolder(
-        root=dataroot+'/CELEBA/img_align_celeba/',trans
+    dataset = datasets.ImageFolder(
+        data_dir_root+'/CELEBA',trans
     )
     return dataset
 
