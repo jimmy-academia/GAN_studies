@@ -80,7 +80,7 @@ class training_param():
 		self.task_dir = config.task_result_root+'/'+config.taskname
 		self.dir_list = [self.task_dir]
 
-		self.save_model=False
+		self.save_model=True
 		self.model_filepath = self.task_dir+'/model.t7'
 	def refresh(self, config):
 		if config.datatype!='mnist':

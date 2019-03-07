@@ -89,12 +89,12 @@ class Trainer():
         print('train #', self.opt.epochs, 'D: %d, G:%d, save at %s'%
             (self.opt.k, self.opt.g, self.opt.task_dir))
 
-        fixed_z = torch.randn(25, self.args.z_dim, 1, 1, device=self.device)
+        # fixed_z = torch.randn(25, self.args.z_dim, 1, 1, device=self.device)
         for i in range(self.opt.epochs):
             epoch_records = self.train_one_epoch(dataloader)
             self.records.append(epoch_records)
             # self.save_img_sample(str(i))
-            self.save_fixed_grid_sample(fixed_z,'Epoch_'+str(i))
+            # self.save_fixed_grid_sample(fixed_z,'Epoch_'+str(i))
             self.save_loss_plot('Epoch_'+str(i))
         if self.opt.save_model:
             self.model.save(self.opt.model_filepath)
@@ -153,39 +153,39 @@ class Trainer():
         epoch_records = np.mean(np.array(epoch_records),0)
         return epoch_records.tolist()
 
-    def save_img_sample(self, img_name='generated'):
-        with torch.no_grad():
-            z = torch.randn(1, 100, 1, 1, device=self.device)
-            generated_img = self.model.G(z)
-            save_image(generated_img.cpu(), self.opt.img_dir+'/'+img_name+'.png')
+    # def save_img_sample(self, img_name='generated'):
+    #     with torch.no_grad():
+    #         z = torch.randn(1, 100, 1, 1, device=self.device)
+    #         generated_img = self.model.G(z)
+    #         save_image(generated_img.cpu(), self.opt.img_dir+'/'+img_name+'.png')
 
 
-    def save_fixed_grid_sample(self, fixed_z, img_name='generated'):
+    # def save_fixed_grid_sample(self, fixed_z, img_name='generated'):
         
-        with torch.no_grad():
-            fixed_z = Variable(fixed_z)
-            generated_ = self.model.G(fixed_z)
-            def denorm(x):
-                # is this needed???
-                out = (x + 1) / 2
-                return out.clamp(0, 1)
-            genrated_ = denorm(generated_)
+    #     with torch.no_grad():
+    #         fixed_z = Variable(fixed_z)
+    #         generated_ = self.model.G(fixed_z)
+    #         def denorm(x):
+    #             # is this needed???
+    #             out = (x + 1) / 2
+    #             return out.clamp(0, 1)
+    #         genrated_ = denorm(generated_)
 
-            n_rows = np.sqrt(fixed_z.size()[0]).astype(np.int32)
-            n_cols = np.sqrt(fixed_z.size()[0]).astype(np.int32)
-            fig, axes = plt.subplots(n_rows, n_cols, figsize=(5,5))
-            for ax, img in zip(axes.flatten(), generated_):
-                ax.axis('off')
-                ax.imshow(img.cpu().data.view(self.args.img_size, self.args.img_size).numpy(), cmap='gray', aspect='equal')
-            plt.subplots_adjust(wspace=0, hspace=0)
-            # title = 'Epoch {0}'.format(num_epoch+1)
-            fig.text(0.5, 0.04, img_name, ha='center')
+    #         n_rows = np.sqrt(fixed_z.size()[0]).astype(np.int32)
+    #         n_cols = np.sqrt(fixed_z.size()[0]).astype(np.int32)
+    #         fig, axes = plt.subplots(n_rows, n_cols, figsize=(5,5))
+    #         for ax, img in zip(axes.flatten(), generated_):
+    #             ax.axis('off')
+    #             ax.imshow(img.cpu().data.view(self.args.img_size, self.args.img_size).numpy(), cmap='gray', aspect='equal')
+    #         plt.subplots_adjust(wspace=0, hspace=0)
+    #         # title = 'Epoch {0}'.format(num_epoch+1)
+    #         fig.text(0.5, 0.04, img_name, ha='center')
 
-            filepath = self.opt.task_dir+'/generated_imgs'
-            if not os.path.exists(filepath):
-                os.mkdir(filepath)
-            plt.savefig(filepath+'/'+img_name+'.png')
-            plt.close()
+    #         filepath = self.opt.task_dir+'/generated_imgs'
+    #         if not os.path.exists(filepath):
+    #             os.mkdir(filepath)
+    #         plt.savefig(filepath+'/'+img_name+'.png')
+    #         plt.close()
 
     def save_loss_plot(self, img_name='loss'):
         four_records = np.array(self.records).T
