@@ -80,6 +80,7 @@ class Trainer():
 
         pbar = tqdm(dataloader)
         epoch_records = []
+        count = 0
 
         for batch_data in pbar:
             if self.config.datatype == 'mnist' or 'celeba':
@@ -90,10 +91,10 @@ class Trainer():
                 inputs = torch.FloatTensor(inputs)
 
             if self.config.datatype == 'lsun':
-                ## train faster by skipping....
-                ratio = 4000./len(dataloader)
-                if np.random.rand() > ratio:
-                    continue
+            ## train faster by skipping....
+                count += 1
+                if count > 4000:
+                    break
 
             # batch_size = inputs.shape[0]
             label_real = Variable(torch.ones(self.args.batch_size).cuda())
@@ -152,7 +153,7 @@ class Trainer():
         with torch.no_grad():
             z = torch.randn(1, 100, 1, 1, device=self.device)
             generated_img = self.model.G(z)
-            save_image(generated_img.cpu(), self.opt.img_dir+'/'+img_name+'.png')
+            save_image(generated_img.cpu(), self.opt.task_dir+'/singles/'+img_name+'.png')
 
 
     def save_fixed_grid_sample(self, fixed_z, img_name='generated'):
@@ -164,14 +165,18 @@ class Trainer():
                 # is this needed???
                 out = (x + 1) / 2
                 return out.clamp(0, 1)
-            genrated_ = denorm(generated_)
+            generated_ = denorm(generated_)
 
             n_rows = np.sqrt(fixed_z.size()[0]).astype(np.int32)
             n_cols = np.sqrt(fixed_z.size()[0]).astype(np.int32)
             fig, axes = plt.subplots(n_rows, n_cols, figsize=(5,5))
             for ax, img in zip(axes.flatten(), generated_):
                 ax.axis('off')
-                ax.imshow(img.cpu().data.view(self.args.img_size, self.args.img_size).numpy(), cmap='gray', aspect='equal')
+                if self.args.img_channel_num ==1:
+                    ax.imshow(img.cpu().data.view(self.args.img_size, self.args.img_size).numpy(), cmap='gray', aspect='equal')
+                elif self.args.img_channel_num==3:
+                    ax.imshow(img.cpu().data.view(self.args.img_size, self.args.img_size,3).numpy(), cmap='gray', aspect='equal')
+
             plt.subplots_adjust(wspace=0, hspace=0)
             # title = 'Epoch {0}'.format(num_epoch+1)
             fig.text(0.5, 0.04, img_name, ha='center')
