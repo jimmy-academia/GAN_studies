@@ -35,7 +35,7 @@ class model_param():
 		else:
 			self.datatype='else'
 			self.img_channel_num = 3
-		self.img_size = 28
+		self.img_size = 64
 		self.z_dim = 62
 		self.continuous_weight=0.5
 
@@ -45,7 +45,7 @@ class model_param():
 		self.dc_dim = 10
 		
 		self.layer_G = [(1024,4,1,0), (512,4,2,1), (256,4,2,1), (128,4,2,1), (self.img_channel_num,4,2,1)]
-		self.layer_D = [(128,4,2,1), (256,4,2,1), (512,4,2,1), (1024,4,2,1), (1,4,1,0)]
+		self.layer_D = [(128,4,2,1), (256,4,2,1), (512,4,2,1), (1024,4,2,1), (1+self.cc_dim+self.dc_dim,4,1,0)]
 		self.use_batchnorm = True
 		self.use_relu = True
 		

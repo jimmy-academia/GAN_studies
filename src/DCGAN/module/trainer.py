@@ -96,9 +96,9 @@ class Trainer():
                 if count > 4000:
                     break
 
-            # batch_size = inputs.shape[0]
-            label_real = Variable(torch.ones(self.args.batch_size).cuda())
-            label_fake = Variable(torch.zeros(self.args.batch_size).cuda())
+            batch_size = inputs.shape[0]
+            label_real = Variable(torch.ones(batch_size).cuda())
+            label_fake = Variable(torch.zeros(batch_size).cuda())
 
             # Discriminator 
             for __ in range(self.opt.k):

@@ -34,7 +34,7 @@ def make_dataloader(dataset, batch_size):
 #list of datasets to use
 def MNIST(data_dir_root, img_size):
     trans = transforms.Compose([
-        # transforms.Resize(img_size),
+        transforms.Resize(img_size),
         transforms.ToTensor(),
         # transforms.Normalize(mean=(0.5), std=(0.5))
     ])

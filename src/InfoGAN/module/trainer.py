@@ -115,14 +115,15 @@ class Trainer():
                 z = to_variable(torch.randn(batch_size, self.args.z_dim))
                 cc = to_variable(gen_cc(batch_size, self.args.cc_dim))
                 dc = to_variable(gen_cc(batch_size, self.args.dc_dim))
-                fake_images = self.model.G(torch.cat((z, cc, dc), 1))
-
+                noice = torch.cat((z, cc, dc), 1)
+                noice = noice.view(noice.size(0), noice.size(1),1,1)
+                fake_images = self.model.G(noice)
                 d_out_real = self.model.D(images)#.view(-1)
                 d_out_fake = self.model.D(fake_images)#.view(-1)
                 # err_Dis_real = self.criterion(d_out_real, label_real)
                 # err_Dis_fake = self.criterion(d_out_fake, label_fake)
+                # d_loss_a = err_Dis_real + err_Dis_fake
                 d_loss_a = -torch.mean(torch.log(d_out_real[:,0]) + torch.log(1 - d_out_fake[:,0]))
-
                 output_cc = d_out_fake[:, 1:1+self.args.cc_dim]
                 output_dc = d_out_fake[:, 1+self.args.cc_dim:]
                 d_loss_cc = torch.mean((((output_cc - 0.0) / 0.5) ** 2))
