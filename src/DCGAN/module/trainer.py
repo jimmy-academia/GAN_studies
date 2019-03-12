@@ -90,6 +90,7 @@ class Trainer():
             if self.config.datatype == 'celeba':
                 inputs = torch.FloatTensor(inputs)
 
+
             if self.config.datatype == 'lsun':
             ## train faster by skipping....
                 count += 1
@@ -98,6 +99,7 @@ class Trainer():
 
             batch_size = inputs.shape[0]
             label_real = Variable(torch.ones(batch_size).cuda())
+
             label_fake = Variable(torch.zeros(batch_size).cuda())
 
             # Discriminator 
@@ -109,13 +111,15 @@ class Trainer():
                 err_Dis_real = self.criterion(out, label_real)
                 Dis_out = out.mean().item()
 
-                z = torch.randn(self.args.batch_size, 100, 1, 1, device=self.device)
+                z = torch.randn(batch_size, 100, 1, 1, device=self.device)
                 z = Variable(z)
 
                 fake_inputs = self.model.G(z)
                 out = self.model.D(fake_inputs)
                 out = out.view(-1)
+                
                 err_Dis_fake = self.criterion(out, label_fake)
+
 
                 err_Dis = err_Dis_fake + err_Dis_real
                 self.model.D.zero_grad()
@@ -125,7 +129,7 @@ class Trainer():
             # Generator  maximize log(D(G(z)))
             for __ in range(self.opt.g):
                 
-                z = torch.randn(self.args.batch_size, 100, 1, 1, device=self.device)
+                z = torch.randn(batch_size, 100, 1, 1, device=self.device)
                 z = Variable(z)
                 fake_inputs = self.model.G(z)
 
