@@ -13,7 +13,7 @@ NIPS 2016 tutorial: Generative Adversarial Networks https://arxiv.org/pdf/1701.0
 Generative Adversarial Networks: An Overview https://arxiv.org/pdf/1710.07035.pdf  
 
 <p align="right">  
-result: <a href="doc/paper_review/week01.md">paper review</a><br>  
+result: <a href="paper_review/week01.md">paper review</a><br>  
 finish date: Feb. 19
 </p>
  
@@ -24,7 +24,7 @@ scheduled: Feb. 22 - Feb. 28
     2. reproduce DCGAN 
 
 <p align="right">  
-result: <a href="doc/paper_review/week02.md">paper review</a>, <a href="src/DCGAN/">reproduce DCGAN</a><br>  
+result: <a href="paper_review/week02.md">paper review</a>, <a href="../src/DCGAN/">reproduce DCGAN</a><br>  
 finish date: Mar. 1
 </p>
 
