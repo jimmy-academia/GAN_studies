@@ -1,6 +1,9 @@
 
 # week2 paper reviews for GAN
 scheduled date: Feb. 8 - Feb. 14    
+<p align="right">  
+<a href="README.md">back to table</a>; <a href="../README.md/#weekly-schedule">back to schedule</a>
+</p>
 
 ## Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks
 (using new template for paper review starting here)
