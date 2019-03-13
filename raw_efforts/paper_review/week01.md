@@ -2,7 +2,7 @@
 # week1 paper reviews for GAN
 scheduled date: Feb. 1 - Feb. 7
 <p align="right">  
-<a href="README.md">back to table</a>; <a href="https://github.com/5loaves-2fish-12basckets/GAN_studies/#weekly-schedule">back to schedule</a>
+<a href="README.md">back to table</a>; <a href="../README.md/#weekly-schedule">back to schedule</a>
 </p>
 
 > paper list:  
