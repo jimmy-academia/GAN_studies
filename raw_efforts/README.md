@@ -1,4 +1,4 @@
-# Schedule/Log
+# GAN study Schedule/Log
 this is a 21 week plan/achievements on studying GANs
 
 ### weekly schedule:
